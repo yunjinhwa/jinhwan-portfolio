@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { ChevronDown, Mail, Github, Linkedin, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { portfolioData } from "@/lib/portfolio-data";
@@ -6,8 +6,9 @@ import { portfolioData } from "@/lib/portfolio-data";
 export default function Home() {
   const [activeSection, setActiveSection] = useState("hero");
   const [skillIndex, setSkillIndex] = useState(0);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
-  // Auto-rotate skills
+  // Auto-rotate skills every 8 seconds
   useEffect(() => {
     const timer = setInterval(() => {
       setSkillIndex((prev) => (prev + 1) % portfolioData.skills.length);
@@ -15,22 +16,45 @@ export default function Home() {
     return () => clearInterval(timer);
   }, []);
 
+  // Update active section on scroll
+  useEffect(() => {
+    const handleScroll = () => {
+      const sections = ["hero", "contact", "about", "education", "skills", "projects", "activity"];
+      for (const section of sections) {
+        const element = document.getElementById(section);
+        if (element) {
+          const rect = element.getBoundingClientRect();
+          if (rect.top <= 100 && rect.bottom >= 100) {
+            setActiveSection(section);
+            break;
+          }
+        }
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-      setActiveSection(sectionId);
+      element.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#FFFBF0] via-[#FFFBF0] to-[#F5F0FF]">
+    <div
+      ref={scrollContainerRef}
+      className="min-h-screen bg-gradient-to-b from-[#FFFBF0] via-[#FFFBF0] to-[#F5F0FF]"
+      style={{ scrollBehavior: "smooth" }}
+    >
       {/* Navigation Bar */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-200/50">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
           <div className="text-xl font-bold text-gray-800">YJH</div>
           <div className="flex gap-1 sm:gap-2 flex-wrap justify-center">
-            {["hero", "about", "education", "skills", "projects", "activity", "contact"].map(
+            {["hero", "contact", "about", "education", "skills", "projects", "activity"].map(
               (section) => (
                 <button
                   key={section}
@@ -41,7 +65,7 @@ export default function Home() {
                       : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
                   }`}
                 >
-                  {section.charAt(0).toUpperCase() + section.slice(1)}
+                  {section === "contact" ? "Contact" : section.charAt(0).toUpperCase() + section.slice(1)}
                 </button>
               )
             )}
@@ -57,6 +81,8 @@ export default function Home() {
           backgroundImage: `url('https://d2xsxph8kpxj0f.cloudfront.net/310519663224932168/Ap8iWxtFKkKptEPsmR3DAr/hero-background-LRmDBhYcviWuMgANi2coCk.webp')`,
           backgroundSize: "cover",
           backgroundPosition: "center",
+          scrollSnapAlign: "start",
+          scrollSnapStop: "always",
         }}
       >
         <div className="text-center max-w-4xl mx-auto z-10">
@@ -81,11 +107,59 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Contact Section (상단 네비게이션 역할) */}
+      <section
+        id="contact"
+        className="py-20 px-4 scroll-snap-start"
+        style={{
+          scrollSnapAlign: "start",
+          scrollSnapStop: "always",
+          backgroundImage: `linear-gradient(135deg, rgba(255, 229, 236, 0.2) 0%, rgba(212, 232, 255, 0.2) 100%)`,
+        }}
+      >
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-8">Contact</h2>
+          <p className="text-lg text-gray-700 mb-12">
+            새로운 기회와 협업에 항상 열려있습니다. 편하게 연락주세요!
+          </p>
+
+          <div className="flex flex-col sm:flex-row justify-center gap-4">
+            <a
+              href={`mailto:${portfolioData.personal.email}`}
+              className="inline-flex items-center gap-2 px-6 py-3 bg-[#FFB3D9] text-white rounded-lg hover:bg-[#FF9CC4] transition-all duration-300 shadow-md hover:shadow-lg"
+            >
+              <Mail size={20} />
+              Email
+            </a>
+            <a
+              href={portfolioData.personal.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-gray-800 text-white rounded-lg hover:bg-gray-900 transition-all duration-300 shadow-md hover:shadow-lg"
+            >
+              <Github size={20} />
+              GitHub
+            </a>
+            <a
+              href={portfolioData.personal.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-[#0077B5] text-white rounded-lg hover:bg-[#005885] transition-all duration-300 shadow-md hover:shadow-lg"
+            >
+              <Linkedin size={20} />
+              LinkedIn
+            </a>
+          </div>
+        </div>
+      </section>
+
       {/* About Section */}
       <section
         id="about"
         className="py-20 px-4 scroll-snap-start"
         style={{
+          scrollSnapAlign: "start",
+          scrollSnapStop: "always",
           backgroundImage: `linear-gradient(135deg, rgba(255, 229, 236, 0.3) 0%, rgba(232, 213, 242, 0.3) 100%)`,
         }}
       >
@@ -106,7 +180,14 @@ export default function Home() {
       </section>
 
       {/* Education Section */}
-      <section id="education" className="py-20 px-4 scroll-snap-start">
+      <section
+        id="education"
+        className="py-20 px-4 scroll-snap-start"
+        style={{
+          scrollSnapAlign: "start",
+          scrollSnapStop: "always",
+        }}
+      >
         <div className="max-w-4xl mx-auto">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-12 text-center">
             Education
@@ -132,6 +213,8 @@ export default function Home() {
         id="skills"
         className="py-20 px-4 scroll-snap-start"
         style={{
+          scrollSnapAlign: "start",
+          scrollSnapStop: "always",
           backgroundImage: `url('https://d2xsxph8kpxj0f.cloudfront.net/310519663224932168/Ap8iWxtFKkKptEPsmR3DAr/skills-bg-g9mJpLYKwD85aDSeLGQDAg.webp')`,
           backgroundSize: "cover",
           backgroundPosition: "center",
@@ -194,6 +277,9 @@ export default function Home() {
                   다음 →
                 </Button>
               </div>
+              <p className="text-center text-gray-500 text-sm mt-6">
+                💡 팁: 기술 스택이 8초마다 자동으로 변경됩니다.
+              </p>
             </div>
           </div>
         </div>
@@ -204,6 +290,8 @@ export default function Home() {
         id="projects"
         className="py-20 px-4 scroll-snap-start"
         style={{
+          scrollSnapAlign: "start",
+          scrollSnapStop: "always",
           backgroundImage: `url('https://d2xsxph8kpxj0f.cloudfront.net/310519663224932168/Ap8iWxtFKkKptEPsmR3DAr/projects-bg-VsMcdkjhsAfJg633v6HC49.webp')`,
           backgroundSize: "cover",
           backgroundPosition: "center",
@@ -251,6 +339,8 @@ export default function Home() {
         id="activity"
         className="py-20 px-4 scroll-snap-start"
         style={{
+          scrollSnapAlign: "start",
+          scrollSnapStop: "always",
           backgroundImage: `linear-gradient(135deg, rgba(212, 232, 255, 0.3) 0%, rgba(213, 240, 232, 0.3) 100%)`,
         }}
       >
@@ -278,52 +368,14 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Contact Section */}
-      <section
-        id="contact"
-        className="py-20 px-4 scroll-snap-start border-t-4 border-[#FFB3D9]"
-      >
+      {/* Footer */}
+      <footer className="py-12 px-4 border-t-4 border-[#FFB3D9] bg-white/50">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-8">
-            Get In Touch
-          </h2>
-          <p className="text-lg text-gray-700 mb-12">
-            새로운 기회와 협업에 항상 열려있습니다. 편하게 연락주세요!
+          <p className="text-gray-600 text-sm">
+            © 2024 Jinhwan Yoon. All rights reserved.
           </p>
-
-          <div className="flex flex-col sm:flex-row justify-center gap-4 mb-12">
-            <a
-              href={`mailto:${portfolioData.personal.email}`}
-              className="inline-flex items-center gap-2 px-6 py-3 bg-[#FFB3D9] text-white rounded-lg hover:bg-[#FF9CC4] transition-all duration-300 shadow-md hover:shadow-lg"
-            >
-              <Mail size={20} />
-              Email
-            </a>
-            <a
-              href={portfolioData.personal.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-gray-800 text-white rounded-lg hover:bg-gray-900 transition-all duration-300 shadow-md hover:shadow-lg"
-            >
-              <Github size={20} />
-              GitHub
-            </a>
-            <a
-              href={portfolioData.personal.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-[#0077B5] text-white rounded-lg hover:bg-[#005885] transition-all duration-300 shadow-md hover:shadow-lg"
-            >
-              <Linkedin size={20} />
-              LinkedIn
-            </a>
-          </div>
-
-          <div className="text-gray-600 text-sm">
-            <p>© 2024 Jinhwan Yoon. All rights reserved.</p>
-          </div>
         </div>
-      </section>
+      </footer>
     </div>
   );
 }
