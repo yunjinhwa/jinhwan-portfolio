@@ -9,7 +9,7 @@ export default function Home() {
   // Update active section on scroll
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ["hero", "contact", "about", "education", "skills", "skills-categories", "projects", "projects-2", "activity"];
+      const sections = ["hero", "contact", "about", "education", "skills", "skills-categories", "projects", "projects-2", "activity", "activity-2"];
       for (const section of sections) {
         const element = document.getElementById(section);
         if (element) {
@@ -240,10 +240,6 @@ export default function Home() {
         }}
       >
         <div className="max-w-4xl mx-auto w-full">
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-12 text-center">
-            기술 스택
-          </h2>
-
           <div className="bg-white rounded-2xl p-8 md:p-12 shadow-lg">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {portfolioData.skills.map((skillGroup, idx) => (
@@ -319,9 +315,6 @@ export default function Home() {
         }}
       >
         <div className="max-w-4xl mx-auto w-full">
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-12 text-center">
-            Projects
-          </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {portfolioData.projects.slice(2).map((project) => (
               <div
@@ -352,7 +345,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Activity Section */}
+      {/* Activity Section - Part 1 */}
       <section
         id="activity"
         className="h-screen flex items-center justify-center px-4"
@@ -360,12 +353,41 @@ export default function Home() {
           backgroundImage: `linear-gradient(135deg, rgba(212, 232, 255, 0.3) 0%, rgba(213, 240, 232, 0.3) 100%)`,
         }}
       >
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-4xl mx-auto w-full">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-12 text-center">
             Activity
           </h2>
           <div className="space-y-6">
-            {portfolioData.activities.map((activity) => (
+            {portfolioData.activities.slice(0, 2).map((activity) => (
+              <div
+                key={activity.id}
+                className="bg-white rounded-xl p-6 md:p-8 shadow-md hover:shadow-lg transition-shadow duration-300 border-t-4 border-[#B3D9FF]"
+              >
+                <div className="flex justify-between items-start mb-3">
+                  <h3 className="text-xl font-bold text-gray-900">{activity.title}</h3>
+                  <span className="px-3 py-1 bg-[#D4E8FF] text-gray-700 text-sm rounded-full">
+                    {activity.type}
+                  </span>
+                </div>
+                <p className="text-gray-600 mb-2">{activity.period}</p>
+                <p className="text-gray-700">{activity.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Activity Section - Part 2 */}
+      <section
+        id="activity-2"
+        className="h-screen flex items-center justify-center px-4"
+        style={{
+          backgroundImage: `linear-gradient(135deg, rgba(212, 232, 255, 0.3) 0%, rgba(213, 240, 232, 0.3) 100%)`,
+        }}
+      >
+        <div className="max-w-4xl mx-auto w-full">
+          <div className="space-y-6">
+            {portfolioData.activities.slice(2).map((activity) => (
               <div
                 key={activity.id}
                 className="bg-white rounded-xl p-6 md:p-8 shadow-md hover:shadow-lg transition-shadow duration-300 border-t-4 border-[#B3D9FF]"
