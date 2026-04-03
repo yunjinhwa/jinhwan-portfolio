@@ -253,7 +253,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Projects Section */}
+      {/* Projects Section - Part 1 */}
       <section
         id="projects"
         className="h-screen flex items-center justify-center px-4"
@@ -263,12 +263,56 @@ export default function Home() {
           backgroundPosition: "center",
         }}
       >
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-4xl mx-auto w-full">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-12 text-center">
             Projects
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {portfolioData.projects.map((project) => (
+            {portfolioData.projects.slice(0, 2).map((project) => (
+              <div
+                key={project.id}
+                className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 hover:scale-105 transform"
+              >
+                <div className="h-40 bg-gradient-to-br from-[#FFB3D9] to-[#E8D5F2] flex items-center justify-center text-6xl">
+                  {project.image}
+                </div>
+                <div className="p-6">
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">{project.title}</h3>
+                  <p className="text-gray-600 mb-4">{project.description}</p>
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    {project.technologies.map((tech, idx) => (
+                      <span
+                        key={idx}
+                        className="px-3 py-1 bg-[#FFE5EC] text-gray-700 text-sm rounded-full"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                  <Button className="w-full bg-[#FFB3D9] hover:bg-[#FF9CC4] text-white rounded-lg">
+                    자세히 보기
+                    <ExternalLink size={16} className="ml-2" />
+                  </Button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Projects Section - Part 2 */}
+      <section
+        id="projects-2"
+        className="h-screen flex items-center justify-center px-4"
+        style={{
+          backgroundImage: `url('https://d2xsxph8kpxj0f.cloudfront.net/310519663224932168/Ap8iWxtFKkKptEPsmR3DAr/projects-bg-VsMcdkjhsAfJg633v6HC49.webp')`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      >
+        <div className="max-w-4xl mx-auto w-full">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {portfolioData.projects.slice(2).map((project) => (
               <div
                 key={project.id}
                 className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 hover:scale-105 transform"
