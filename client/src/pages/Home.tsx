@@ -169,7 +169,7 @@ export default function Home() {
         id="education"
         className="h-screen flex items-center justify-center px-4"
       >
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-4xl mx-auto w-full">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-12 text-center">
             Education
           </h2>
@@ -240,24 +240,25 @@ export default function Home() {
         }}
       >
         <div className="max-w-4xl mx-auto w-full">
-          <div className="bg-white rounded-2xl p-8 md:p-12 shadow-lg">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {portfolioData.skills.map((skillGroup, idx) => (
-                <div key={idx} className="bg-gray-50 rounded-lg p-6">
-                  <h4 className="font-bold text-gray-900 mb-4 text-center">{skillGroup.category}</h4>
-                  <div className="flex flex-wrap gap-2 justify-center">
-                    {skillGroup.items.map((skill, skillIdx) => (
-                      <span
-                        key={skillIdx}
-                        className="px-3 py-1 bg-[#FFE5EC] text-gray-700 text-sm rounded-full"
-                      >
-                        {skill.name}
-                      </span>
-                    ))}
-                  </div>
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-12 text-center">
+            Skills
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {portfolioData.skills.map((skillGroup, idx) => (
+              <div key={idx} className="bg-white rounded-lg p-6 shadow-md hover:shadow-lg transition-shadow">
+                <h4 className="font-bold text-gray-900 mb-4 text-center text-lg">{skillGroup.category}</h4>
+                <div className="flex flex-wrap gap-2 justify-center">
+                  {skillGroup.items.map((skill, skillIdx) => (
+                    <span
+                      key={skillIdx}
+                      className="px-3 py-1 bg-[#FFE5EC] text-gray-700 text-sm rounded-full"
+                    >
+                      {skill.name}
+                    </span>
+                  ))}
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -315,6 +316,9 @@ export default function Home() {
         }}
       >
         <div className="max-w-4xl mx-auto w-full">
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-12 text-center">
+            Projects
+          </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {portfolioData.projects.slice(2).map((project) => (
               <div
@@ -386,6 +390,9 @@ export default function Home() {
         }}
       >
         <div className="max-w-4xl mx-auto w-full">
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-12 text-center">
+            Activity
+          </h2>
           <div className="space-y-6">
             {portfolioData.activities.slice(2).map((activity) => (
               <div
