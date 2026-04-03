@@ -19,32 +19,35 @@ export const portfolioData = {
     }
   ],
   
-  about: [
-    "사용자의 입장으로 생각하는 것이 중요하다고 생각합니다. 새로운 기술을 배우고, 이를 실제 프로젝트에 적용하여 의미 있는 결과를 만드는 것을 좋아합니다.",
-    "저는 사용자의 입장에서 생각하는 것이 중요하다고 믿습니다. 단순히 코드를 작성하는 것이 아니라, 사용자 경험을 고려한 솔루션을 만드는 것을 좋아합니다."
-  ],
-  
-  skills: {
-    carousel: [
-      { name: "React", icon: "⚛️" },
-      { name: "TypeScript", icon: "📘" },
-      { name: "Tailwind CSS", icon: "🎨" },
-      { name: "HTML/CSS", icon: "🌐" },
-      { name: "Node.js", icon: "🟢" },
-      { name: "Express", icon: "⚙️" },
-      { name: "Python", icon: "🐍" },
-      { name: "SQL", icon: "🗄️" },
-      { name: "Git", icon: "📚" },
-      { name: "Docker", icon: "🐳" },
-      { name: "VS Code", icon: "💻" },
-      { name: "Figma", icon: "🎭" }
-    ],
-    categories: {
-      "Frontend": ["React", "TypeScript", "Tailwind CSS", "HTML/CSS"],
-      "Backend": ["Node.js", "Express", "Python", "SQL"],
-      "Tools": ["Git", "Docker", "VS Code", "Figma"]
+  skills: [
+    {
+      category: "Frontend",
+      items: [
+        { name: "React", icon: "⚛️" },
+        { name: "TypeScript", icon: "📘" },
+        { name: "Tailwind CSS", icon: "🎨" },
+        { name: "HTML/CSS", icon: "🌐" }
+      ]
+    },
+    {
+      category: "Backend",
+      items: [
+        { name: "Node.js", icon: "🟢" },
+        { name: "Express", icon: "⚙️" },
+        { name: "Python", icon: "🐍" },
+        { name: "SQL", icon: "🗄️" }
+      ]
+    },
+    {
+      category: "Tools",
+      items: [
+        { name: "Git", icon: "📚" },
+        { name: "Docker", icon: "🐳" },
+        { name: "VS Code", icon: "💻" },
+        { name: "Figma", icon: "🎭" }
+      ]
     }
-  },
+  ],
   
   projects: [
     {
@@ -98,12 +101,5 @@ export const portfolioData = {
       period: "2023 - 현재",
       type: "활동"
     }
-  ],
-  
-  contact: {
-    message: "새로운 기회와 협업에 항상 열려있습니다. 편하게 연락주세요!",
-    email: "jinhwan@example.com",
-    github: "https://github.com/jinhwan",
-    linkedin: "https://linkedin.com/in/jinhwan"
-  }
+  ]
 };
