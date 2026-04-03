@@ -62,41 +62,44 @@ export default function Home() {
       {/* Hero Section */}
       <section
         id="hero"
-        className="relative overflow-hidden pt-20"
+        className="relative overflow-hidden h-screen flex items-center justify-center"
         style={{
           backgroundImage: `url('https://d2xsxph8kpxj0f.cloudfront.net/310519663224932168/Ap8iWxtFKkKptEPsmR3DAr/hero-background-LRmDBhYcviWuMgANi2coCk.webp')`,
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
       >
-        <div className="min-h-screen flex items-center justify-center px-4">
-          <div className="text-center max-w-4xl mx-auto z-10">
-            <h1 className="text-5xl md:text-7xl font-bold text-gray-900 mb-6 leading-tight">
+        {/* Animated gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-b from-white/0 via-white/0 to-white/30 animate-pulse"></div>
+        
+        <div className="relative z-10 text-center max-w-4xl mx-auto px-4">
+          <div className="animate-fade-in-up">
+            <h1 className="text-5xl md:text-7xl font-bold text-gray-900 mb-6 leading-tight drop-shadow-lg">
               {portfolioData.personal.name}
             </h1>
-            <p className="text-lg md:text-2xl text-gray-700 mb-8 leading-relaxed font-light">
+            <p className="text-lg md:text-2xl text-gray-700 mb-8 leading-relaxed font-light drop-shadow">
               {portfolioData.personal.title}
             </p>
             <button
               onClick={() => scrollToSection("about")}
-              className="inline-flex items-center gap-2 px-6 py-3 bg-[#FFB3D9] text-white rounded-lg hover:bg-[#FF9CC4] transition-all duration-300 shadow-lg hover:shadow-xl"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-[#FFB3D9] text-white rounded-lg hover:bg-[#FF9CC4] transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 transform"
             >
               자세히 보기
               <ChevronDown size={20} />
             </button>
           </div>
+        </div>
 
-          {/* Scroll indicator */}
-          <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-            <ChevronDown size={24} className="text-gray-600" />
-          </div>
+        {/* Scroll indicator */}
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+          <ChevronDown size={24} className="text-gray-600" />
         </div>
       </section>
 
       {/* Contact Section */}
       <section
         id="contact"
-        className="py-20 px-4"
+        className="h-screen flex items-center justify-center px-4"
         style={{
           backgroundImage: `linear-gradient(135deg, rgba(255, 229, 236, 0.2) 0%, rgba(212, 232, 255, 0.2) 100%)`,
         }}
@@ -140,7 +143,7 @@ export default function Home() {
       {/* About Section */}
       <section
         id="about"
-        className="py-20 px-4"
+        className="h-screen flex items-center justify-center px-4"
         style={{
           backgroundImage: `linear-gradient(135deg, rgba(255, 229, 236, 0.3) 0%, rgba(232, 213, 242, 0.3) 100%)`,
         }}
@@ -164,7 +167,7 @@ export default function Home() {
       {/* Education Section */}
       <section
         id="education"
-        className="py-20 px-4"
+        className="h-screen flex items-center justify-center px-4"
       >
         <div className="max-w-4xl mx-auto">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-12 text-center">
@@ -189,7 +192,7 @@ export default function Home() {
       {/* Skills Section - Continuous Carousel */}
       <section
         id="skills"
-        className="py-20 px-4"
+        className="h-screen flex items-center justify-center px-4"
         style={{
           backgroundImage: `url('https://d2xsxph8kpxj0f.cloudfront.net/310519663224932168/Ap8iWxtFKkKptEPsmR3DAr/skills-bg-g9mJpLYKwD85aDSeLGQDAg.webp')`,
           backgroundSize: "cover",
@@ -253,7 +256,7 @@ export default function Home() {
       {/* Projects Section */}
       <section
         id="projects"
-        className="py-20 px-4"
+        className="h-screen flex items-center justify-center px-4"
         style={{
           backgroundImage: `url('https://d2xsxph8kpxj0f.cloudfront.net/310519663224932168/Ap8iWxtFKkKptEPsmR3DAr/projects-bg-VsMcdkjhsAfJg633v6HC49.webp')`,
           backgroundSize: "cover",
@@ -300,7 +303,7 @@ export default function Home() {
       {/* Activity Section */}
       <section
         id="activity"
-        className="py-20 px-4"
+        className="h-screen flex items-center justify-center px-4"
         style={{
           backgroundImage: `linear-gradient(135deg, rgba(212, 232, 255, 0.3) 0%, rgba(213, 240, 232, 0.3) 100%)`,
         }}
