@@ -168,6 +168,35 @@
 }
 
 @layer components {
+  /* Scroll Snap Container */
+  html {
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+  }
+
+  section {
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  /* Skills Carousel Animation */
+  @keyframes scroll-carousel {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+
+  .skills-carousel {
+    animation: scroll-carousel 30s linear infinite;
+  }
+
   /**
    * Custom container utility that centers content and adds responsive padding.
    *

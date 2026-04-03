@@ -1,20 +1,10 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { ChevronDown, Mail, Github, Linkedin, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { portfolioData } from "@/lib/portfolio-data";
 
 export default function Home() {
   const [activeSection, setActiveSection] = useState("hero");
-  const [skillIndex, setSkillIndex] = useState(0);
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
-
-  // Auto-rotate skills every 8 seconds
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setSkillIndex((prev) => (prev + 1) % portfolioData.skills.length);
-    }, 8000);
-    return () => clearInterval(timer);
-  }, []);
 
   // Update active section on scroll
   useEffect(() => {
@@ -44,11 +34,7 @@ export default function Home() {
   };
 
   return (
-    <div
-      ref={scrollContainerRef}
-      className="min-h-screen bg-gradient-to-b from-[#FFFBF0] via-[#FFFBF0] to-[#F5F0FF]"
-      style={{ scrollBehavior: "smooth" }}
-    >
+    <div className="bg-gradient-to-b from-[#FFFBF0] via-[#FFFBF0] to-[#F5F0FF]">
       {/* Navigation Bar */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-200/50">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
@@ -76,44 +62,42 @@ export default function Home() {
       {/* Hero Section */}
       <section
         id="hero"
-        className="min-h-screen flex items-center justify-center pt-20 px-4 relative overflow-hidden"
+        className="relative overflow-hidden pt-20"
         style={{
           backgroundImage: `url('https://d2xsxph8kpxj0f.cloudfront.net/310519663224932168/Ap8iWxtFKkKptEPsmR3DAr/hero-background-LRmDBhYcviWuMgANi2coCk.webp')`,
           backgroundSize: "cover",
           backgroundPosition: "center",
-          scrollSnapAlign: "start",
-          scrollSnapStop: "always",
         }}
       >
-        <div className="text-center max-w-4xl mx-auto z-10">
-          <h1 className="text-5xl md:text-7xl font-bold text-gray-900 mb-6 leading-tight">
-            {portfolioData.personal.name}
-          </h1>
-          <p className="text-lg md:text-2xl text-gray-700 mb-8 leading-relaxed font-light">
-            {portfolioData.personal.title}
-          </p>
-          <button
-            onClick={() => scrollToSection("about")}
-            className="inline-flex items-center gap-2 px-6 py-3 bg-[#FFB3D9] text-white rounded-lg hover:bg-[#FF9CC4] transition-all duration-300 shadow-lg hover:shadow-xl"
-          >
-            자세히 보기
-            <ChevronDown size={20} />
-          </button>
-        </div>
+        <div className="min-h-screen flex items-center justify-center px-4">
+          <div className="text-center max-w-4xl mx-auto z-10">
+            <h1 className="text-5xl md:text-7xl font-bold text-gray-900 mb-6 leading-tight">
+              {portfolioData.personal.name}
+            </h1>
+            <p className="text-lg md:text-2xl text-gray-700 mb-8 leading-relaxed font-light">
+              {portfolioData.personal.title}
+            </p>
+            <button
+              onClick={() => scrollToSection("about")}
+              className="inline-flex items-center gap-2 px-6 py-3 bg-[#FFB3D9] text-white rounded-lg hover:bg-[#FF9CC4] transition-all duration-300 shadow-lg hover:shadow-xl"
+            >
+              자세히 보기
+              <ChevronDown size={20} />
+            </button>
+          </div>
 
-        {/* Scroll indicator */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-          <ChevronDown size={24} className="text-gray-600" />
+          {/* Scroll indicator */}
+          <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <ChevronDown size={24} className="text-gray-600" />
+          </div>
         </div>
       </section>
 
-      {/* Contact Section (상단 네비게이션 역할) */}
+      {/* Contact Section */}
       <section
         id="contact"
-        className="py-20 px-4 scroll-snap-start"
+        className="py-20 px-4"
         style={{
-          scrollSnapAlign: "start",
-          scrollSnapStop: "always",
           backgroundImage: `linear-gradient(135deg, rgba(255, 229, 236, 0.2) 0%, rgba(212, 232, 255, 0.2) 100%)`,
         }}
       >
@@ -156,10 +140,8 @@ export default function Home() {
       {/* About Section */}
       <section
         id="about"
-        className="py-20 px-4 scroll-snap-start"
+        className="py-20 px-4"
         style={{
-          scrollSnapAlign: "start",
-          scrollSnapStop: "always",
           backgroundImage: `linear-gradient(135deg, rgba(255, 229, 236, 0.3) 0%, rgba(232, 213, 242, 0.3) 100%)`,
         }}
       >
@@ -182,11 +164,7 @@ export default function Home() {
       {/* Education Section */}
       <section
         id="education"
-        className="py-20 px-4 scroll-snap-start"
-        style={{
-          scrollSnapAlign: "start",
-          scrollSnapStop: "always",
-        }}
+        className="py-20 px-4"
       >
         <div className="max-w-4xl mx-auto">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-12 text-center">
@@ -208,13 +186,11 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Skills Section */}
+      {/* Skills Section - Continuous Carousel */}
       <section
         id="skills"
-        className="py-20 px-4 scroll-snap-start"
+        className="py-20 px-4"
         style={{
-          scrollSnapAlign: "start",
-          scrollSnapStop: "always",
           backgroundImage: `url('https://d2xsxph8kpxj0f.cloudfront.net/310519663224932168/Ap8iWxtFKkKptEPsmR3DAr/skills-bg-g9mJpLYKwD85aDSeLGQDAg.webp')`,
           backgroundSize: "cover",
           backgroundPosition: "center",
@@ -225,61 +201,50 @@ export default function Home() {
             Skills
           </h2>
 
-          {/* Rotating Skills Display */}
-          <div className="mb-12">
-            <div className="bg-white rounded-2xl p-8 md:p-12 shadow-lg">
-              <div className="text-center">
-                <h3 className="text-2xl font-bold text-gray-900 mb-8">
-                  {portfolioData.skills[skillIndex].category}
-                </h3>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-                  {portfolioData.skills[skillIndex].items.map((skill, idx) => (
-                    <div
-                      key={idx}
-                      className="flex flex-col items-center gap-3 p-4 rounded-lg hover:bg-gray-50 transition-colors duration-300"
-                    >
-                      <span className="text-5xl">{skill.icon}</span>
-                      <span className="text-gray-700 font-medium">{skill.name}</span>
+          {/* Continuous Carousel */}
+          <div className="bg-white rounded-2xl p-8 md:p-12 shadow-lg overflow-hidden">
+            <div className="relative">
+              {/* Carousel Container */}
+              <div className="overflow-hidden">
+                <div className="skills-carousel flex gap-8 w-fit">
+                  {/* Duplicate skills for seamless loop */}
+                  {[...portfolioData.skills, ...portfolioData.skills].map((skillGroup, groupIdx) =>
+                    skillGroup.items.map((skill, idx) => (
+                      <div
+                        key={`${groupIdx}-${idx}`}
+                        className="flex flex-col items-center gap-3 p-4 flex-shrink-0"
+                      >
+                        <span className="text-5xl">{skill.icon}</span>
+                        <span className="text-gray-700 font-medium text-center whitespace-nowrap">
+                          {skill.name}
+                        </span>
+                      </div>
+                    ))
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {/* Skills Categories Display */}
+            <div className="mt-12 pt-8 border-t border-gray-200">
+              <h3 className="text-xl font-bold text-gray-900 mb-6 text-center">기술 스택</h3>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {portfolioData.skills.map((skillGroup, idx) => (
+                  <div key={idx} className="bg-gray-50 rounded-lg p-6">
+                    <h4 className="font-bold text-gray-900 mb-4 text-center">{skillGroup.category}</h4>
+                    <div className="flex flex-wrap gap-2 justify-center">
+                      {skillGroup.items.map((skill, skillIdx) => (
+                        <span
+                          key={skillIdx}
+                          className="px-3 py-1 bg-[#FFE5EC] text-gray-700 text-sm rounded-full"
+                        >
+                          {skill.name}
+                        </span>
+                      ))}
                     </div>
-                  ))}
-                </div>
+                  </div>
+                ))}
               </div>
-              <div className="flex justify-center gap-4 mt-8">
-                <Button
-                  onClick={() =>
-                    setSkillIndex((prev) =>
-                      prev === 0 ? portfolioData.skills.length - 1 : prev - 1
-                    )
-                  }
-                  variant="outline"
-                  className="rounded-lg"
-                >
-                  ← 이전
-                </Button>
-                <div className="flex items-center gap-2">
-                  {portfolioData.skills.map((_, idx) => (
-                    <button
-                      key={idx}
-                      onClick={() => setSkillIndex(idx)}
-                      className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                        idx === skillIndex ? "bg-[#FFB3D9] w-6" : "bg-gray-300"
-                      }`}
-                    />
-                  ))}
-                </div>
-                <Button
-                  onClick={() =>
-                    setSkillIndex((prev) => (prev + 1) % portfolioData.skills.length)
-                  }
-                  variant="outline"
-                  className="rounded-lg"
-                >
-                  다음 →
-                </Button>
-              </div>
-              <p className="text-center text-gray-500 text-sm mt-6">
-                💡 팁: 기술 스택이 8초마다 자동으로 변경됩니다.
-              </p>
             </div>
           </div>
         </div>
@@ -288,10 +253,8 @@ export default function Home() {
       {/* Projects Section */}
       <section
         id="projects"
-        className="py-20 px-4 scroll-snap-start"
+        className="py-20 px-4"
         style={{
-          scrollSnapAlign: "start",
-          scrollSnapStop: "always",
           backgroundImage: `url('https://d2xsxph8kpxj0f.cloudfront.net/310519663224932168/Ap8iWxtFKkKptEPsmR3DAr/projects-bg-VsMcdkjhsAfJg633v6HC49.webp')`,
           backgroundSize: "cover",
           backgroundPosition: "center",
@@ -337,10 +300,8 @@ export default function Home() {
       {/* Activity Section */}
       <section
         id="activity"
-        className="py-20 px-4 scroll-snap-start"
+        className="py-20 px-4"
         style={{
-          scrollSnapAlign: "start",
-          scrollSnapStop: "always",
           backgroundImage: `linear-gradient(135deg, rgba(212, 232, 255, 0.3) 0%, rgba(213, 240, 232, 0.3) 100%)`,
         }}
       >
