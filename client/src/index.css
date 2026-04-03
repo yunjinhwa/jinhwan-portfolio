@@ -184,17 +184,17 @@
   }
 
   /* Skills Carousel Animation */
-@keyframes scroll-carousel {
-  0% {
-    transform: translateX(0);
+  @keyframes skills-carousel {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(calc(-50% - 16px));
+    }
   }
-  100% {
-    transform: translateX(-50%);
-  }
-}
 
-.skills-carousel {
-  animation: scroll-carousel 120s linear infinite;
+  .skills-carousel {
+    animation: skills-carousel 80s linear infinite;
   }
 
   /* Fade in up animation for hero */

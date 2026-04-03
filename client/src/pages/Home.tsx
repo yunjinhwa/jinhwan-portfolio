@@ -9,7 +9,7 @@ export default function Home() {
   // Update active section on scroll
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ["hero", "contact", "about", "education", "skills", "skills-categories", "projects", "projects-2", "activity", "activity-2"];
+      const sections = ["hero", "about", "education", "skills", "skills-categories", "projects", "projects-2", "activity", "activity-2", "contact"];
       for (const section of sections) {
         const element = document.getElementById(section);
         if (element) {
@@ -40,7 +40,7 @@ export default function Home() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
           <div className="text-xl font-bold text-gray-800">YJH</div>
           <div className="flex gap-1 sm:gap-2 flex-wrap justify-center">
-            {["hero", "contact", "about", "education", "skills", "projects", "activity"].map(
+            {["hero", "about", "education", "skills", "projects", "activity", "contact"].map(
               (section) => (
                 <button
                   key={section}
@@ -59,10 +59,10 @@ export default function Home() {
         </div>
       </nav>
 
-      {/* Hero Section */}
+      {/* Hero Section - Simplified */}
       <section
         id="hero"
-        className="relative overflow-hidden h-screen flex items-center justify-center"
+        className="relative overflow-hidden h-screen flex items-center justify-center pt-20"
         style={{
           backgroundImage: `url('https://d2xsxph8kpxj0f.cloudfront.net/310519663224932168/Ap8iWxtFKkKptEPsmR3DAr/hero-background-LRmDBhYcviWuMgANi2coCk.webp')`,
           backgroundSize: "cover",
@@ -80,63 +80,12 @@ export default function Home() {
             <p className="text-lg md:text-2xl text-gray-700 mb-8 leading-relaxed font-light drop-shadow">
               {portfolioData.personal.title}
             </p>
-            <button
-              onClick={() => scrollToSection("about")}
-              className="inline-flex items-center gap-2 px-6 py-3 bg-[#FFB3D9] text-white rounded-lg hover:bg-[#FF9CC4] transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 transform"
-            >
-              자세히 보기
-              <ChevronDown size={20} />
-            </button>
           </div>
         </div>
 
         {/* Scroll indicator */}
         <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
           <ChevronDown size={24} className="text-gray-600" />
-        </div>
-      </section>
-
-      {/* Contact Section */}
-      <section
-        id="contact"
-        className="h-screen flex items-center justify-center px-4"
-        style={{
-          backgroundColor: "#FFF5F8",
-        }}
-      >
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-8">Contact</h2>
-          <p className="text-lg text-gray-700 mb-12">
-            새로운 기회와 협업에 항상 열려있습니다. 편하게 연락주세요!
-          </p>
-
-          <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <a
-              href={`mailto:${portfolioData.personal.email}`}
-              className="inline-flex items-center gap-2 px-6 py-3 bg-[#FFB3D9] text-white rounded-lg hover:bg-[#FF9CC4] transition-all duration-300 shadow-md hover:shadow-lg"
-            >
-              <Mail size={20} />
-              Email
-            </a>
-            <a
-              href={portfolioData.personal.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-gray-800 text-white rounded-lg hover:bg-gray-900 transition-all duration-300 shadow-md hover:shadow-lg"
-            >
-              <Github size={20} />
-              GitHub
-            </a>
-            <a
-              href={portfolioData.personal.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-[#0077B5] text-white rounded-lg hover:bg-[#005885] transition-all duration-300 shadow-md hover:shadow-lg"
-            >
-              <Linkedin size={20} />
-              LinkedIn
-            </a>
-          </div>
         </div>
       </section>
 
@@ -256,7 +205,7 @@ export default function Home() {
                   {skillGroup.items.map((skill, skillIdx) => (
                     <span
                       key={skillIdx}
-                      className="px-3 py-1 bg-[#FFE5EC] text-gray-700 text-sm rounded-full"
+                      className="px-3 py-1 bg-[#FFE5F0] text-gray-700 rounded-full text-sm font-medium hover:bg-[#FFB3D9] hover:text-white transition-colors"
                     >
                       {skill.name}
                     </span>
@@ -280,29 +229,25 @@ export default function Home() {
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-12 text-center">
             Projects
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="space-y-6">
             {portfolioData.projects.slice(0, 2).map((project) => (
               <div
                 key={project.id}
-                className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 transform"
+                className="bg-white rounded-xl p-6 md:p-8 shadow-md hover:shadow-lg transition-shadow duration-300 border-l-4 border-[#D4C5FF]"
               >
-                <div className="h-40 bg-gradient-to-br from-[#FFB3D9] to-[#FFD4E5] flex items-center justify-center text-6xl">
-                  {project.image}
-                </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">{project.title}</h3>
-                  <p className="text-gray-600 mb-4">{project.description}</p>
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {project.technologies.map((tech: string, idx: number) => (
-                      <span key={idx} className="px-3 py-1 bg-[#FFE5EC] text-gray-700 text-sm rounded-full">
-                        {tech}
-                      </span>
-                    ))}
+                <div className="flex items-start gap-4 mb-4">
+                  <span className="text-4xl">{project.image}</span>
+                  <div className="flex-1">
+                    <h3 className="text-2xl font-bold text-gray-900 mb-2">{project.title}</h3>
+                    <p className="text-gray-600 mb-3">{project.description}</p>
                   </div>
-                  <button className="w-full px-4 py-2 bg-[#FFB3D9] text-white rounded-lg hover:bg-[#FF9CC4] transition-all duration-300 flex items-center justify-center gap-2">
-                    자세히 보기
-                    <ExternalLink size={16} />
-                  </button>
+                </div>
+                <div className="flex flex-wrap gap-2 mb-4">
+                  {project.technologies.map((tech, idx) => (
+                    <span key={idx} className="px-3 py-1 bg-[#F0E5FF] text-gray-700 rounded-full text-sm">
+                      {tech}
+                    </span>
+                  ))}
                 </div>
               </div>
             ))}
@@ -322,29 +267,25 @@ export default function Home() {
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-12 text-center">
             Projects
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="space-y-6">
             {portfolioData.projects.slice(2).map((project) => (
               <div
                 key={project.id}
-                className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 transform"
+                className="bg-white rounded-xl p-6 md:p-8 shadow-md hover:shadow-lg transition-shadow duration-300 border-l-4 border-[#D4C5FF]"
               >
-                <div className="h-40 bg-gradient-to-br from-[#B3D9FF] to-[#D4E5FF] flex items-center justify-center text-6xl">
-                  {project.image}
-                </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">{project.title}</h3>
-                  <p className="text-gray-600 mb-4">{project.description}</p>
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {project.technologies.map((tech: string, idx: number) => (
-                      <span key={idx} className="px-3 py-1 bg-[#D4E5FF] text-gray-700 text-sm rounded-full">
-                        {tech}
-                      </span>
-                    ))}
+                <div className="flex items-start gap-4 mb-4">
+                  <span className="text-4xl">{project.image}</span>
+                  <div className="flex-1">
+                    <h3 className="text-2xl font-bold text-gray-900 mb-2">{project.title}</h3>
+                    <p className="text-gray-600 mb-3">{project.description}</p>
                   </div>
-                  <button className="w-full px-4 py-2 bg-[#B3D9FF] text-white rounded-lg hover:bg-[#99CCFF] transition-all duration-300 flex items-center justify-center gap-2">
-                    자세히 보기
-                    <ExternalLink size={16} />
-                  </button>
+                </div>
+                <div className="flex flex-wrap gap-2 mb-4">
+                  {project.technologies.map((tech, idx) => (
+                    <span key={idx} className="px-3 py-1 bg-[#F0E5FF] text-gray-700 rounded-full text-sm">
+                      {tech}
+                    </span>
+                  ))}
                 </div>
               </div>
             ))}
@@ -412,6 +353,50 @@ export default function Home() {
                 <p className="text-gray-700">{activity.description}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Contact Section - Moved to Bottom */}
+      <section
+        id="contact"
+        className="h-screen flex items-center justify-center px-4"
+        style={{
+          backgroundColor: "#FFF5F8",
+        }}
+      >
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-8">Contact</h2>
+          <p className="text-lg text-gray-700 mb-12">
+            새로운 기회와 협업에 항상 열려있습니다. 편하게 연락주세요!
+          </p>
+
+          <div className="flex flex-col sm:flex-row justify-center gap-4">
+            <a
+              href={`mailto:${portfolioData.personal.email}`}
+              className="inline-flex items-center gap-2 px-6 py-3 bg-[#FFB3D9] text-white rounded-lg hover:bg-[#FF9CC4] transition-all duration-300 shadow-md hover:shadow-lg"
+            >
+              <Mail size={20} />
+              Email
+            </a>
+            <a
+              href={portfolioData.personal.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-gray-800 text-white rounded-lg hover:bg-gray-900 transition-all duration-300 shadow-md hover:shadow-lg"
+            >
+              <Github size={20} />
+              GitHub
+            </a>
+            <a
+              href={portfolioData.personal.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-[#0077B5] text-white rounded-lg hover:bg-[#005885] transition-all duration-300 shadow-md hover:shadow-lg"
+            >
+              <Linkedin size={20} />
+              LinkedIn
+            </a>
           </div>
         </div>
       </section>
