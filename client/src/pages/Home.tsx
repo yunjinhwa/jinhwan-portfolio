@@ -9,7 +9,7 @@ export default function Home() {
   // Update active section on scroll
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ["hero", "contact", "about", "education", "skills", "projects", "activity"];
+      const sections = ["hero", "contact", "about", "education", "skills", "skills-categories", "projects", "projects-2", "activity"];
       for (const section of sections) {
         const element = document.getElementById(section);
         if (element) {
@@ -46,7 +46,7 @@ export default function Home() {
                   key={section}
                   onClick={() => scrollToSection(section)}
                   className={`px-3 py-1 text-sm font-medium rounded-lg transition-all duration-300 ${
-                    activeSection === section
+                    activeSection === section || activeSection === `${section}-2` || activeSection === `${section}-categories`
                       ? "bg-[#FFB3D9] text-white shadow-md"
                       : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
                   }`}
@@ -158,7 +158,7 @@ export default function Home() {
             </p>
             <p className="text-lg text-gray-700 leading-relaxed">
               저는 사용자의 입장에서 생각하는 것이 중요하다고 믿습니다. 단순히 코드를 작성하는 것이 아니라, 
-              사용자 경험을 고려한 솔루션을 만들기 위해 노력합니다.
+              사용자 경험을 고려한 솔루션을 만드는 것을 좋아합니다.
             </p>
           </div>
         </div>
@@ -189,7 +189,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Skills Section - Continuous Carousel */}
+      {/* Skills Section 1 - Continuous Carousel */}
       <section
         id="skills"
         className="h-screen flex items-center justify-center px-4"
@@ -199,7 +199,7 @@ export default function Home() {
           backgroundPosition: "center",
         }}
       >
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-4xl mx-auto w-full">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-12 text-center">
             Skills
           </h2>
@@ -227,27 +227,40 @@ export default function Home() {
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
 
-            {/* Skills Categories Display */}
-            <div className="mt-12 pt-8 border-t border-gray-200">
-              <h3 className="text-xl font-bold text-gray-900 mb-6 text-center">기술 스택</h3>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {portfolioData.skills.map((skillGroup, idx) => (
-                  <div key={idx} className="bg-gray-50 rounded-lg p-6">
-                    <h4 className="font-bold text-gray-900 mb-4 text-center">{skillGroup.category}</h4>
-                    <div className="flex flex-wrap gap-2 justify-center">
-                      {skillGroup.items.map((skill, skillIdx) => (
-                        <span
-                          key={skillIdx}
-                          className="px-3 py-1 bg-[#FFE5EC] text-gray-700 text-sm rounded-full"
-                        >
-                          {skill.name}
-                        </span>
-                      ))}
-                    </div>
+      {/* Skills Section 2 - Categories */}
+      <section
+        id="skills-categories"
+        className="h-screen flex items-center justify-center px-4"
+        style={{
+          backgroundImage: `linear-gradient(135deg, rgba(212, 232, 255, 0.2) 0%, rgba(213, 240, 232, 0.2) 100%)`,
+        }}
+      >
+        <div className="max-w-4xl mx-auto w-full">
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-12 text-center">
+            기술 스택
+          </h2>
+
+          <div className="bg-white rounded-2xl p-8 md:p-12 shadow-lg">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {portfolioData.skills.map((skillGroup, idx) => (
+                <div key={idx} className="bg-gray-50 rounded-lg p-6">
+                  <h4 className="font-bold text-gray-900 mb-4 text-center">{skillGroup.category}</h4>
+                  <div className="flex flex-wrap gap-2 justify-center">
+                    {skillGroup.items.map((skill, skillIdx) => (
+                      <span
+                        key={skillIdx}
+                        className="px-3 py-1 bg-[#FFE5EC] text-gray-700 text-sm rounded-full"
+                      >
+                        {skill.name}
+                      </span>
+                    ))}
                   </div>
-                ))}
-              </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -271,28 +284,25 @@ export default function Home() {
             {portfolioData.projects.slice(0, 2).map((project) => (
               <div
                 key={project.id}
-                className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 hover:scale-105 transform"
+                className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 transform"
               >
-                <div className="h-40 bg-gradient-to-br from-[#FFB3D9] to-[#E8D5F2] flex items-center justify-center text-6xl">
+                <div className="h-40 bg-gradient-to-br from-[#FFB3D9] to-[#FFD4E5] flex items-center justify-center text-6xl">
                   {project.image}
                 </div>
                 <div className="p-6">
                   <h3 className="text-xl font-bold text-gray-900 mb-2">{project.title}</h3>
                   <p className="text-gray-600 mb-4">{project.description}</p>
                   <div className="flex flex-wrap gap-2 mb-4">
-                    {project.technologies.map((tech, idx) => (
-                      <span
-                        key={idx}
-                        className="px-3 py-1 bg-[#FFE5EC] text-gray-700 text-sm rounded-full"
-                      >
+                    {project.technologies.map((tech: string, idx: number) => (
+                      <span key={idx} className="px-3 py-1 bg-[#FFE5EC] text-gray-700 text-sm rounded-full">
                         {tech}
                       </span>
                     ))}
                   </div>
-                  <Button className="w-full bg-[#FFB3D9] hover:bg-[#FF9CC4] text-white rounded-lg">
+                  <button className="w-full px-4 py-2 bg-[#FFB3D9] text-white rounded-lg hover:bg-[#FF9CC4] transition-all duration-300 flex items-center justify-center gap-2">
                     자세히 보기
-                    <ExternalLink size={16} className="ml-2" />
-                  </Button>
+                    <ExternalLink size={16} />
+                  </button>
                 </div>
               </div>
             ))}
@@ -305,38 +315,36 @@ export default function Home() {
         id="projects-2"
         className="h-screen flex items-center justify-center px-4"
         style={{
-          backgroundImage: `url('https://d2xsxph8kpxj0f.cloudfront.net/310519663224932168/Ap8iWxtFKkKptEPsmR3DAr/projects-bg-VsMcdkjhsAfJg633v6HC49.webp')`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
+          backgroundImage: `linear-gradient(135deg, rgba(255, 229, 236, 0.2) 0%, rgba(212, 232, 255, 0.2) 100%)`,
         }}
       >
         <div className="max-w-4xl mx-auto w-full">
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-12 text-center">
+            Projects
+          </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {portfolioData.projects.slice(2).map((project) => (
               <div
                 key={project.id}
-                className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 hover:scale-105 transform"
+                className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 transform"
               >
-                <div className="h-40 bg-gradient-to-br from-[#FFB3D9] to-[#E8D5F2] flex items-center justify-center text-6xl">
+                <div className="h-40 bg-gradient-to-br from-[#B3D9FF] to-[#D4E5FF] flex items-center justify-center text-6xl">
                   {project.image}
                 </div>
                 <div className="p-6">
                   <h3 className="text-xl font-bold text-gray-900 mb-2">{project.title}</h3>
                   <p className="text-gray-600 mb-4">{project.description}</p>
                   <div className="flex flex-wrap gap-2 mb-4">
-                    {project.technologies.map((tech, idx) => (
-                      <span
-                        key={idx}
-                        className="px-3 py-1 bg-[#FFE5EC] text-gray-700 text-sm rounded-full"
-                      >
+                    {project.technologies.map((tech: string, idx: number) => (
+                      <span key={idx} className="px-3 py-1 bg-[#D4E5FF] text-gray-700 text-sm rounded-full">
                         {tech}
                       </span>
                     ))}
                   </div>
-                  <Button className="w-full bg-[#FFB3D9] hover:bg-[#FF9CC4] text-white rounded-lg">
+                  <button className="w-full px-4 py-2 bg-[#B3D9FF] text-white rounded-lg hover:bg-[#99CCFF] transition-all duration-300 flex items-center justify-center gap-2">
                     자세히 보기
-                    <ExternalLink size={16} className="ml-2" />
-                  </Button>
+                    <ExternalLink size={16} />
+                  </button>
                 </div>
               </div>
             ))}
