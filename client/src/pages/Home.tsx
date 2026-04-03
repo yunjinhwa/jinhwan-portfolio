@@ -34,7 +34,7 @@ export default function Home() {
   };
 
   return (
-    <div className="bg-gradient-to-b from-[#FFFBF0] via-[#FFFBF0] to-[#F5F0FF]">
+    <div className="bg-white">
       {/* Navigation Bar */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-200/50">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
@@ -101,7 +101,7 @@ export default function Home() {
         id="contact"
         className="h-screen flex items-center justify-center px-4"
         style={{
-          backgroundImage: `linear-gradient(135deg, rgba(255, 229, 236, 0.2) 0%, rgba(212, 232, 255, 0.2) 100%)`,
+          backgroundColor: "#FFF5F8",
         }}
       >
         <div className="max-w-4xl mx-auto text-center">
@@ -145,7 +145,7 @@ export default function Home() {
         id="about"
         className="h-screen flex items-center justify-center px-4"
         style={{
-          backgroundImage: `linear-gradient(135deg, rgba(255, 229, 236, 0.3) 0%, rgba(232, 213, 242, 0.3) 100%)`,
+          backgroundColor: "#FFF5F8",
         }}
       >
         <div className="max-w-4xl mx-auto">
@@ -168,6 +168,9 @@ export default function Home() {
       <section
         id="education"
         className="h-screen flex items-center justify-center px-4"
+        style={{
+          backgroundColor: "#F0F8FF",
+        }}
       >
         <div className="max-w-4xl mx-auto w-full">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-12 text-center">
@@ -236,7 +239,9 @@ export default function Home() {
         id="skills-categories"
         className="h-screen flex items-center justify-center px-4"
         style={{
-          backgroundImage: `linear-gradient(135deg, rgba(212, 232, 255, 0.2) 0%, rgba(213, 240, 232, 0.2) 100%)`,
+          backgroundImage: `url('https://d2xsxph8kpxj0f.cloudfront.net/310519663224932168/Ap8iWxtFKkKptEPsmR3DAr/skills-bg-g9mJpLYKwD85aDSeLGQDAg.webp')`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
         }}
       >
         <div className="max-w-4xl mx-auto w-full">
@@ -268,9 +273,7 @@ export default function Home() {
         id="projects"
         className="h-screen flex items-center justify-center px-4"
         style={{
-          backgroundImage: `url('https://d2xsxph8kpxj0f.cloudfront.net/310519663224932168/Ap8iWxtFKkKptEPsmR3DAr/projects-bg-VsMcdkjhsAfJg633v6HC49.webp')`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
+          backgroundColor: "#F5F0FF",
         }}
       >
         <div className="max-w-4xl mx-auto w-full">
@@ -312,7 +315,7 @@ export default function Home() {
         id="projects-2"
         className="h-screen flex items-center justify-center px-4"
         style={{
-          backgroundImage: `linear-gradient(135deg, rgba(255, 229, 236, 0.2) 0%, rgba(212, 232, 255, 0.2) 100%)`,
+          backgroundColor: "#F5F0FF",
         }}
       >
         <div className="max-w-4xl mx-auto w-full">
@@ -354,7 +357,7 @@ export default function Home() {
         id="activity"
         className="h-screen flex items-center justify-center px-4"
         style={{
-          backgroundImage: `linear-gradient(135deg, rgba(212, 232, 255, 0.3) 0%, rgba(213, 240, 232, 0.3) 100%)`,
+          backgroundColor: "#F0F8FF",
         }}
       >
         <div className="max-w-4xl mx-auto w-full">
@@ -386,7 +389,7 @@ export default function Home() {
         id="activity-2"
         className="h-screen flex items-center justify-center px-4"
         style={{
-          backgroundImage: `linear-gradient(135deg, rgba(212, 232, 255, 0.3) 0%, rgba(213, 240, 232, 0.3) 100%)`,
+          backgroundColor: "#F0F8FF",
         }}
       >
         <div className="max-w-4xl mx-auto w-full">
