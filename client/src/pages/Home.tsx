@@ -176,7 +176,11 @@ export default function Home() {
                         key={`${groupIdx}-${idx}`}
                         className="flex flex-col items-center gap-3 p-4 flex-shrink-0"
                       >
-                        <span className="text-5xl">{skill.icon}</span>
+                        {skill.icon.startsWith('http') ? (
+                          <img src={skill.icon} alt={skill.name} className="w-16 h-16 object-contain" />
+                        ) : (
+                          <span className="text-5xl">{skill.icon}</span>
+                        )}
                         <span className="text-gray-700 font-medium text-center whitespace-nowrap">
                           {skill.name}
                         </span>

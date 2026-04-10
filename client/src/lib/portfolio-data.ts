@@ -23,28 +23,28 @@ export const portfolioData = {
     {
       category: "Frontend",
       items: [
-        { name: "React", icon: "⚛️" },
-        { name: "TypeScript", icon: "🔷" },
-        { name: "Tailwind CSS", icon: "🌊" },
-        { name: "HTML/CSS", icon: "🏷️" }
+        { name: "React", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
+        { name: "TypeScript", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" },
+        { name: "Tailwind CSS", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-plain.svg" },
+        { name: "HTML/CSS", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" }
       ]
     },
     {
       category: "Backend",
       items: [
-        { name: "Node.js", icon: "🟩" },
-        { name: "Express", icon: "⚡" },
-        { name: "Python", icon: "🐍" },
-        { name: "SQL", icon: "🗄️" }
+        { name: "Node.js", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" },
+        { name: "Express", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg" },
+        { name: "Python", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" },
+        { name: "SQL", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" }
       ]
     },
     {
       category: "Tools",
       items: [
-        { name: "Git", icon: "🔀" },
-        { name: "Docker", icon: "🐳" },
-        { name: "VS Code", icon: "💻" },
-        { name: "Figma", icon: "🎨" }
+        { name: "Git", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" },
+        { name: "Docker", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" },
+        { name: "VS Code", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg" },
+        { name: "Figma", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg" }
       ]
     }
   ],
