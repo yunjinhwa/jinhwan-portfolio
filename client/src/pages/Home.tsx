@@ -89,7 +89,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* About Section */}
+      {/* About Section - Side Layout */}
       <section
         id="about"
         className="h-screen flex items-center justify-center px-4"
@@ -97,23 +97,34 @@ export default function Home() {
           backgroundColor: "#FFF5F8",
         }}
       >
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-5xl mx-auto w-full">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-12 text-center">
             About Me
           </h2>
-          <div className="bg-white rounded-2xl p-8 md:p-12 shadow-lg hover:shadow-xl transition-shadow duration-300">
-            <p className="text-lg text-gray-700 leading-relaxed mb-6">
-              {portfolioData.personal.bio}
-            </p>
-            <p className="text-lg text-gray-700 leading-relaxed">
-              저는 사용자의 입장에서 생각하는 것이 중요하다고 믿습니다. 단순히 코드를 작성하는 것이 아니라, 
-              사용자 경험을 고려한 솔루션을 만드는 것을 좋아합니다.
-            </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+            {/* Left: Image/Icon */}
+            <div className="flex justify-center">
+              <div className="text-9xl">👨‍💻</div>
+            </div>
+            
+            {/* Right: Text */}
+            <div>
+              <p className="text-lg text-gray-700 leading-relaxed mb-6">
+                {portfolioData.personal.bio}
+              </p>
+              <p className="text-lg text-gray-700 leading-relaxed mb-6">
+                저는 사용자의 입장에서 생각하는 것이 중요하다고 믿습니다. 단순히 코드를 작성하는 것이 아니라, 
+                사용자 경험을 고려한 솔루션을 만드는 것을 좋아합니다.
+              </p>
+              <p className="text-lg text-gray-700 leading-relaxed">
+                새로운 기술을 배우고 지속적으로 성장하는 것을 즐기며, 팀과 함께 협력하여 더 좋은 결과물을 만드는 것에 보람을 느낍니다.
+              </p>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Education Section */}
+      {/* Education Section - Text List */}
       <section
         id="education"
         className="h-screen flex items-center justify-center px-4"
@@ -125,23 +136,19 @@ export default function Home() {
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-12 text-center">
             Education
           </h2>
-          <div className="space-y-6">
+          <div className="space-y-8">
             {portfolioData.education.map((edu) => (
-              <div
-                key={edu.id}
-                className="bg-white rounded-xl p-6 md:p-8 shadow-md hover:shadow-lg transition-shadow duration-300 border-l-4 border-[#FFB3D9]"
-              >
+              <div key={edu.id} className="border-b border-gray-300 pb-6 last:border-b-0">
                 <h3 className="text-2xl font-bold text-gray-900 mb-2">{edu.school}</h3>
                 <p className="text-lg text-[#FFB3D9] font-semibold mb-2">{edu.major}</p>
-                <p className="text-gray-600 mb-3">{edu.period}</p>
-                <p className="text-gray-700">{edu.description}</p>
+                <p className="text-gray-600">{edu.period}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Skills Section 1 - Continuous Carousel */}
+      {/* Skills Section - Carousel and Categories Combined */}
       <section
         id="skills"
         className="h-screen flex items-center justify-center px-4"
@@ -155,9 +162,9 @@ export default function Home() {
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-12 text-center">
             Skills
           </h2>
-
+          
           {/* Continuous Carousel */}
-          <div className="bg-white rounded-2xl p-8 md:p-12 shadow-lg overflow-hidden">
+          <div className="bg-white rounded-2xl p-8 md:p-12 shadow-lg overflow-hidden mb-12">
             <div className="relative">
               {/* Carousel Container */}
               <div className="overflow-hidden">
@@ -180,32 +187,17 @@ export default function Home() {
               </div>
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* Skills Section 2 - Categories */}
-      <section
-        id="skills-categories"
-        className="h-screen flex items-center justify-center px-4"
-        style={{
-          backgroundImage: `url('https://d2xsxph8kpxj0f.cloudfront.net/310519663224932168/Ap8iWxtFKkKptEPsmR3DAr/skills-bg-g9mJpLYKwD85aDSeLGQDAg.webp')`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-      >
-        <div className="max-w-4xl mx-auto w-full">
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-12 text-center">
-            Skills
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          
+          {/* Skills Categories */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {portfolioData.skills.map((skillGroup, idx) => (
-              <div key={idx} className="bg-white rounded-lg p-6 shadow-md hover:shadow-lg transition-shadow">
-                <h4 className="font-bold text-gray-900 mb-4 text-center text-lg">{skillGroup.category}</h4>
-                <div className="flex flex-wrap gap-2 justify-center">
+              <div key={idx}>
+                <h4 className="font-bold text-gray-900 mb-6 text-center text-lg text-[#FFB3D9]">{skillGroup.category}</h4>
+                <div className="flex flex-wrap gap-3 justify-center">
                   {skillGroup.items.map((skill, skillIdx) => (
                     <span
                       key={skillIdx}
-                      className="px-3 py-1 bg-[#FFE5F0] text-gray-700 rounded-full text-sm font-medium hover:bg-[#FFB3D9] hover:text-white transition-colors"
+                      className="px-4 py-2 bg-[#FFE5F0] text-gray-700 rounded-full text-sm font-medium hover:bg-[#FFB3D9] hover:text-white transition-colors"
                     >
                       {skill.name}
                     </span>
@@ -229,22 +221,19 @@ export default function Home() {
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-12 text-center">
             Projects
           </h2>
-          <div className="space-y-6">
+          <div className="space-y-8">
             {portfolioData.projects.slice(0, 2).map((project) => (
-              <div
-                key={project.id}
-                className="bg-white rounded-xl p-6 md:p-8 shadow-md hover:shadow-lg transition-shadow duration-300 border-l-4 border-[#D4C5FF]"
-              >
+              <div key={project.id} className="border-b border-gray-300 pb-8 last:border-b-0">
                 <div className="flex items-start gap-4 mb-4">
-                  <span className="text-4xl">{project.image}</span>
+                  <span className="text-5xl flex-shrink-0">{project.image}</span>
                   <div className="flex-1">
                     <h3 className="text-2xl font-bold text-gray-900 mb-2">{project.title}</h3>
-                    <p className="text-gray-600 mb-3">{project.description}</p>
+                    <p className="text-gray-600 mb-4">{project.description}</p>
                   </div>
                 </div>
-                <div className="flex flex-wrap gap-2 mb-4">
+                <div className="flex flex-wrap gap-2 ml-20">
                   {project.technologies.map((tech, idx) => (
-                    <span key={idx} className="px-3 py-1 bg-[#F0E5FF] text-gray-700 rounded-full text-sm">
+                    <span key={idx} className="px-3 py-1 bg-[#F0E5FF] text-gray-700 rounded-full text-sm font-medium">
                       {tech}
                     </span>
                   ))}
@@ -267,22 +256,19 @@ export default function Home() {
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-12 text-center">
             Projects
           </h2>
-          <div className="space-y-6">
+          <div className="space-y-8">
             {portfolioData.projects.slice(2).map((project) => (
-              <div
-                key={project.id}
-                className="bg-white rounded-xl p-6 md:p-8 shadow-md hover:shadow-lg transition-shadow duration-300 border-l-4 border-[#D4C5FF]"
-              >
+              <div key={project.id} className="border-b border-gray-300 pb-8 last:border-b-0">
                 <div className="flex items-start gap-4 mb-4">
-                  <span className="text-4xl">{project.image}</span>
+                  <span className="text-5xl flex-shrink-0">{project.image}</span>
                   <div className="flex-1">
                     <h3 className="text-2xl font-bold text-gray-900 mb-2">{project.title}</h3>
-                    <p className="text-gray-600 mb-3">{project.description}</p>
+                    <p className="text-gray-600 mb-4">{project.description}</p>
                   </div>
                 </div>
-                <div className="flex flex-wrap gap-2 mb-4">
+                <div className="flex flex-wrap gap-2 ml-20">
                   {project.technologies.map((tech, idx) => (
-                    <span key={idx} className="px-3 py-1 bg-[#F0E5FF] text-gray-700 rounded-full text-sm">
+                    <span key={idx} className="px-3 py-1 bg-[#F0E5FF] text-gray-700 rounded-full text-sm font-medium">
                       {tech}
                     </span>
                   ))}
@@ -305,20 +291,11 @@ export default function Home() {
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-12 text-center">
             Activity
           </h2>
-          <div className="space-y-6">
-            {portfolioData.activities.slice(0, 2).map((activity) => (
-              <div
-                key={activity.id}
-                className="bg-white rounded-xl p-6 md:p-8 shadow-md hover:shadow-lg transition-shadow duration-300 border-t-4 border-[#B3D9FF]"
-              >
-                <div className="flex justify-between items-start mb-3">
-                  <h3 className="text-xl font-bold text-gray-900">{activity.title}</h3>
-                  <span className="px-3 py-1 bg-[#D4E8FF] text-gray-700 text-sm rounded-full">
-                    {activity.type}
-                  </span>
-                </div>
-                <p className="text-gray-600 mb-2">{activity.period}</p>
-                <p className="text-gray-700">{activity.description}</p>
+          <div className="space-y-8">
+            {portfolioData.activities.slice(0, 2).map((activity, idx) => (
+              <div key={idx} className="border-b border-gray-300 pb-8 last:border-b-0">
+                <h3 className="text-2xl font-bold text-gray-900 mb-2">{activity.title}</h3>
+                <p className="text-gray-600">{activity.period}</p>
               </div>
             ))}
           </div>
@@ -337,27 +314,18 @@ export default function Home() {
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-12 text-center">
             Activity
           </h2>
-          <div className="space-y-6">
-            {portfolioData.activities.slice(2).map((activity) => (
-              <div
-                key={activity.id}
-                className="bg-white rounded-xl p-6 md:p-8 shadow-md hover:shadow-lg transition-shadow duration-300 border-t-4 border-[#B3D9FF]"
-              >
-                <div className="flex justify-between items-start mb-3">
-                  <h3 className="text-xl font-bold text-gray-900">{activity.title}</h3>
-                  <span className="px-3 py-1 bg-[#D4E8FF] text-gray-700 text-sm rounded-full">
-                    {activity.type}
-                  </span>
-                </div>
-                <p className="text-gray-600 mb-2">{activity.period}</p>
-                <p className="text-gray-700">{activity.description}</p>
+          <div className="space-y-8">
+            {portfolioData.activities.slice(2).map((activity, idx) => (
+              <div key={idx} className="border-b border-gray-300 pb-8 last:border-b-0">
+                <h3 className="text-2xl font-bold text-gray-900 mb-2">{activity.title}</h3>
+                <p className="text-gray-600">{activity.period}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Contact Section - Moved to Bottom */}
+      {/* Contact Section */}
       <section
         id="contact"
         className="h-screen flex items-center justify-center px-4"
@@ -365,34 +333,38 @@ export default function Home() {
           backgroundColor: "#FFF5F8",
         }}
       >
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-8">Contact</h2>
-          <p className="text-lg text-gray-700 mb-12">
-            새로운 기회와 협업에 항상 열려있습니다. 편하게 연락주세요!
+        <div className="max-w-4xl mx-auto w-full text-center">
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-8">
+            Contact
+          </h2>
+          <p className="text-xl text-gray-700 mb-12 leading-relaxed">
+            새로운 프로젝트나 협업 기회에 항상 열려있습니다. 
+            <br />
+            아래의 연락처를 통해 저에게 연락주세요!
           </p>
-
-          <div className="flex flex-col sm:flex-row justify-center gap-4">
+          
+          <div className="flex justify-center gap-6 flex-wrap">
             <a
-              href={`mailto:${portfolioData.personal.email}`}
-              className="inline-flex items-center gap-2 px-6 py-3 bg-[#FFB3D9] text-white rounded-lg hover:bg-[#FF9CC4] transition-all duration-300 shadow-md hover:shadow-lg"
+              href="mailto:your-email@example.com"
+              className="flex items-center gap-2 px-6 py-3 bg-[#FFB3D9] text-white rounded-lg font-semibold hover:bg-[#FF99C8] transition-colors"
             >
               <Mail size={20} />
               Email
             </a>
             <a
-              href={portfolioData.personal.github}
+              href="https://github.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-gray-800 text-white rounded-lg hover:bg-gray-900 transition-all duration-300 shadow-md hover:shadow-lg"
+              className="flex items-center gap-2 px-6 py-3 bg-gray-800 text-white rounded-lg font-semibold hover:bg-gray-900 transition-colors"
             >
               <Github size={20} />
               GitHub
             </a>
             <a
-              href={portfolioData.personal.linkedin}
+              href="https://linkedin.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-[#0077B5] text-white rounded-lg hover:bg-[#005885] transition-all duration-300 shadow-md hover:shadow-lg"
+              className="flex items-center gap-2 px-6 py-3 bg-[#0A66C2] text-white rounded-lg font-semibold hover:bg-[#094399] transition-colors"
             >
               <Linkedin size={20} />
               LinkedIn
@@ -400,15 +372,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      {/* Footer */}
-      <footer className="py-12 px-4 border-t-4 border-[#FFB3D9] bg-white/50">
-        <div className="max-w-4xl mx-auto text-center">
-          <p className="text-gray-600 text-sm">
-            © 2024 Jinhwan Yoon. All rights reserved.
-          </p>
-        </div>
-      </footer>
     </div>
   );
 }

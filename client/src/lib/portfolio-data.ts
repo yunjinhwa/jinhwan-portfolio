@@ -24,16 +24,16 @@ export const portfolioData = {
       category: "Frontend",
       items: [
         { name: "React", icon: "⚛️" },
-        { name: "TypeScript", icon: "📘" },
-        { name: "Tailwind CSS", icon: "🎨" },
-        { name: "HTML/CSS", icon: "🌐" }
+        { name: "TypeScript", icon: "🔷" },
+        { name: "Tailwind CSS", icon: "🌊" },
+        { name: "HTML/CSS", icon: "🏷️" }
       ]
     },
     {
       category: "Backend",
       items: [
-        { name: "Node.js", icon: "🟢" },
-        { name: "Express", icon: "⚙️" },
+        { name: "Node.js", icon: "🟩" },
+        { name: "Express", icon: "⚡" },
         { name: "Python", icon: "🐍" },
         { name: "SQL", icon: "🗄️" }
       ]
@@ -41,10 +41,10 @@ export const portfolioData = {
     {
       category: "Tools",
       items: [
-        { name: "Git", icon: "📚" },
+        { name: "Git", icon: "🔀" },
         { name: "Docker", icon: "🐳" },
         { name: "VS Code", icon: "💻" },
-        { name: "Figma", icon: "🎭" }
+        { name: "Figma", icon: "🎨" }
       ]
     }
   ],
