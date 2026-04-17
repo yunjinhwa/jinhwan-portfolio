@@ -62,7 +62,7 @@ export default function Home() {
       {/* Hero Section - Simplified */}
       <section
         id="hero"
-        className="relative overflow-hidden h-screen flex items-center justify-center pt-20"
+        className="relative overflow-hidden h-screen flex items-center justify-center"
         style={{
           backgroundImage: `url('https://d2xsxph8kpxj0f.cloudfront.net/310519663224932168/Ap8iWxtFKkKptEPsmR3DAr/hero-background-LRmDBhYcviWuMgANi2coCk.webp')`,
           backgroundSize: "cover",
@@ -70,10 +70,10 @@ export default function Home() {
         }}
       >
         {/* Animated gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-white/0 via-white/0 to-white/30 animate-pulse"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-white/0 via-white/0 to-white/30"></div>
         
         <div className="relative z-10 text-center max-w-4xl mx-auto px-4">
-          <div className="animate-fade-in-up">
+          <div className="animate-hero-entrance">
             <h1 className="text-5xl md:text-7xl font-bold text-gray-900 mb-6 leading-tight drop-shadow-lg">
               {portfolioData.personal.name}
             </h1>
