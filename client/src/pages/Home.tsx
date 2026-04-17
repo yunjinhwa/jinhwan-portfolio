@@ -62,7 +62,11 @@ export default function Home() {
       {/* Hero Section - Simplified */}
       <section
         id="hero"
-        className="relative overflow-hidden h-screen flex items-center justify-center bg-gradient-to-br from-white via-[#FFF5F8] to-[#FFE5F0]"
+        className="relative overflow-hidden w-full flex items-center justify-center bg-gradient-to-br from-white via-[#FFF5F8] to-[#FFE5F0]"
+        style={{
+          height: "calc(100vh - 80px)",
+          marginTop: "80px",
+        }}
       >
         {/* Animated gradient overlay */}
         <div className="absolute inset-0 bg-gradient-to-b from-white/0 via-white/0 to-white/30"></div>
