@@ -62,12 +62,7 @@ export default function Home() {
       {/* Hero Section - Simplified */}
       <section
         id="hero"
-        className="relative overflow-hidden h-screen flex items-center justify-center"
-        style={{
-          backgroundImage: `url('https://d2xsxph8kpxj0f.cloudfront.net/310519663224932168/Ap8iWxtFKkKptEPsmR3DAr/hero-background-LRmDBhYcviWuMgANi2coCk.webp')`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
+        className="relative overflow-hidden h-screen flex items-center justify-center bg-gradient-to-br from-white via-[#FFF5F8] to-[#FFE5F0]"
       >
         {/* Animated gradient overlay */}
         <div className="absolute inset-0 bg-gradient-to-b from-white/0 via-white/0 to-white/30"></div>
