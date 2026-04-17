@@ -235,12 +235,23 @@ export default function Home() {
                     <p className="text-gray-600 mb-4">{project.description}</p>
                   </div>
                 </div>
-                <div className="flex flex-wrap gap-2 ml-20">
+                <div className="flex flex-wrap gap-2 ml-20 mb-4">
                   {project.technologies.map((tech, idx) => (
                     <span key={idx} className="px-3 py-1 bg-[#F0E5FF] text-gray-700 rounded-full text-sm font-medium">
                       {tech}
                     </span>
                   ))}
+                </div>
+                <div className="ml-20">
+                  <a
+                    href={project.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-4 py-2 bg-[#FFB3D9] text-white rounded-lg font-semibold hover:bg-[#FF99C8] transition-colors"
+                  >
+                    <ExternalLink size={16} />
+                    GitHub
+                  </a>
                 </div>
               </div>
             ))}
@@ -270,12 +281,23 @@ export default function Home() {
                     <p className="text-gray-600 mb-4">{project.description}</p>
                   </div>
                 </div>
-                <div className="flex flex-wrap gap-2 ml-20">
+                <div className="flex flex-wrap gap-2 ml-20 mb-4">
                   {project.technologies.map((tech, idx) => (
                     <span key={idx} className="px-3 py-1 bg-[#F0E5FF] text-gray-700 rounded-full text-sm font-medium">
                       {tech}
                     </span>
                   ))}
+                </div>
+                <div className="ml-20">
+                  <a
+                    href={project.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-4 py-2 bg-[#FFB3D9] text-white rounded-lg font-semibold hover:bg-[#FF99C8] transition-colors"
+                  >
+                    <ExternalLink size={16} />
+                    GitHub
+                  </a>
                 </div>
               </div>
             ))}
