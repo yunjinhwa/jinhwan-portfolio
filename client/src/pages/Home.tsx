@@ -37,7 +37,7 @@ export default function Home() {
     <div className="bg-white">
       {/* Navigation Bar */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-200/50">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
           <div className="text-xl font-bold text-gray-800">YJH</div>
           <div className="flex gap-1 sm:gap-2 flex-wrap justify-center">
             {["hero", "about", "education", "skills", "projects", "activity", "contact"].map(
@@ -97,7 +97,7 @@ export default function Home() {
           backgroundColor: "#FFF5F8",
         }}
       >
-        <div className="max-w-5xl mx-auto w-full">
+        <div className="max-w-7xl mx-auto w-full">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-12 text-center">
             About Me
           </h2>
@@ -132,7 +132,7 @@ export default function Home() {
           backgroundColor: "#F0F8FF",
         }}
       >
-        <div className="max-w-4xl mx-auto w-full">
+        <div className="max-w-7xl mx-auto w-full">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-12 text-center">
             Education
           </h2>
@@ -158,7 +158,7 @@ export default function Home() {
           backgroundPosition: "center",
         }}
       >
-        <div className="max-w-4xl mx-auto w-full">
+        <div className="max-w-7xl mx-auto w-full">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-12 text-center">
             Skills
           </h2>
@@ -221,7 +221,7 @@ export default function Home() {
           backgroundColor: "#F5F0FF",
         }}
       >
-        <div className="max-w-4xl mx-auto w-full">
+        <div className="max-w-7xl mx-auto w-full">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-12 text-center">
             Projects
           </h2>
@@ -256,7 +256,7 @@ export default function Home() {
           backgroundColor: "#F5F0FF",
         }}
       >
-        <div className="max-w-4xl mx-auto w-full">
+        <div className="max-w-7xl mx-auto w-full">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-12 text-center">
             Projects
           </h2>
@@ -291,7 +291,7 @@ export default function Home() {
           backgroundColor: "#F0F8FF",
         }}
       >
-        <div className="max-w-4xl mx-auto w-full">
+        <div className="max-w-7xl mx-auto w-full">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-12 text-center">
             Activity
           </h2>
@@ -314,7 +314,7 @@ export default function Home() {
           backgroundColor: "#F0F8FF",
         }}
       >
-        <div className="max-w-4xl mx-auto w-full">
+        <div className="max-w-7xl mx-auto w-full">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-12 text-center">
             Activity
           </h2>
@@ -337,7 +337,7 @@ export default function Home() {
           backgroundColor: "#FFF5F8",
         }}
       >
-        <div className="max-w-4xl mx-auto w-full text-center">
+        <div className="max-w-7xl mx-auto w-full text-center">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-8">
             Contact
           </h2>
