@@ -191,10 +191,8 @@
   .portfolio-page > .portfolio-section {
     position: relative;
     min-height: 100svh;
-    content-visibility: auto;
-    contain-intrinsic-size: 100vh;
     scroll-snap-align: start;
-    scroll-snap-stop: normal;
+    scroll-snap-stop: always;
   }
 
   html.is-programmatic-scrolling {
