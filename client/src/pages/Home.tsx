@@ -1,398 +1,508 @@
-import { useState, useEffect } from "react";
-import { ChevronDown, Mail, Github, Linkedin, ExternalLink } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { useEffect, useState } from "react";
+import {
+  ArrowUpRight,
+  BadgeCheck,
+  ArrowUp,
+  ChevronDown,
+  ExternalLink,
+  Fish,
+  Footprints,
+  Gamepad2,
+  Github,
+  Instagram,
+  Languages,
+  Mail,
+  type LucideIcon,
+} from "lucide-react";
 import { portfolioData } from "@/lib/portfolio-data";
+
+const NAV_SECTIONS = [
+  "hero",
+  "about",
+  "skills",
+  "projects",
+  "activity",
+  "contact",
+] as const;
+
+const SECTION_LABELS: Record<(typeof NAV_SECTIONS)[number], string> = {
+  hero: "Home",
+  about: "About",
+  skills: "Skills",
+  projects: "Projects",
+  activity: "Activity",
+  contact: "Contact",
+};
+
+const SECTION_CLASS =
+  "portfolio-section px-5 py-20 sm:px-8 sm:py-24 lg:px-[8vw]";
+const SECTION_INNER_CLASS = "mx-auto w-full max-w-[1320px]";
+const SECTION_TITLE_CLASS =
+  "mb-10 text-4xl font-black tracking-tight text-[#252525] sm:mb-14 sm:text-5xl lg:text-6xl";
+
+type Project = (typeof portfolioData.projects)[number];
+type Activity = (typeof portfolioData.activities)[number];
+type Skill = (typeof portfolioData.skills)[number]["items"][number];
+
+const PROJECT_ICONS: Record<string, LucideIcon> = {
+  badgeCheck: BadgeCheck,
+  gamepad: Gamepad2,
+  fish: Fish,
+  footprints: Footprints,
+  languages: Languages,
+};
+
+const skills = portfolioData.skills.flatMap(group => group.items);
+const projectsByLatest = [...portfolioData.projects].sort(
+  (a, b) => b.year - a.year || a.id - b.id
+);
 
 export default function Home() {
   const [activeSection, setActiveSection] = useState("hero");
 
-  // Update active section on scroll
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ["hero", "about", "education", "skills", "skills-categories", "projects", "projects-2", "activity", "activity-2", "contact"];
-      for (const section of sections) {
+      for (const section of NAV_SECTIONS) {
         const element = document.getElementById(section);
-        if (element) {
-          const rect = element.getBoundingClientRect();
-          if (rect.top <= 100 && rect.bottom >= 100) {
-            setActiveSection(section);
-            break;
-          }
+
+        if (!element) {
+          continue;
+        }
+
+        const rect = element.getBoundingClientRect();
+        if (rect.top <= 120 && rect.bottom >= 120) {
+          setActiveSection(section);
+          break;
         }
       }
     };
 
+    handleScroll();
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
+    document
+      .getElementById(sectionId)
+      ?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
   return (
-    <div>
-      {/* Navigation Bar */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-200/50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-          <div className="text-xl font-bold text-gray-800">YJH</div>
-          <div className="flex gap-1 sm:gap-2 flex-wrap justify-center">
-            {["hero", "about", "education", "skills", "projects", "activity", "contact"].map(
-              (section) => (
-                <button
-                  key={section}
-                  onClick={() => scrollToSection(section)}
-                  className={`px-3 py-1 text-sm font-medium rounded-lg transition-all duration-300 ${
-                    activeSection === section || activeSection === `${section}-2` || activeSection === `${section}-categories`
-                      ? "bg-[#FFB3D9] text-white shadow-md"
-                      : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
-                  }`}
-                >
-                  {section === "contact" ? "Contact" : section.charAt(0).toUpperCase() + section.slice(1)}
-                </button>
-              )
-            )}
-          </div>
-        </div>
-      </nav>
+    <main className="portfolio-page bg-white text-[#252525]">
+      <Header activeSection={activeSection} onNavigate={scrollToSection} />
+      <Hero />
+      <About />
+      <Skills />
+      <Projects />
+      <Activity />
+      <Contact />
+      <BackToTopButton onClick={() => scrollToSection("hero")} />
+    </main>
+  );
+}
 
-      {/* Hero Section - Simplified */}
-      <section
-        id="hero"
-        className="relative overflow-hidden w-full h-screen flex items-center justify-center bg-gradient-to-br from-white via-[#FFF5F8] to-[#FFE5F0]"
-      >
-        {/* Animated gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-white/0 via-white/0 to-white/30"></div>
-        
-        <div className="relative z-10 text-center max-w-4xl mx-auto px-4">
-          <div className="animate-hero-entrance">
-            <h1 className="text-5xl md:text-7xl font-bold text-gray-900 mb-6 leading-tight drop-shadow-lg">
-              {portfolioData.personal.name}
-            </h1>
-            <p className="text-lg md:text-2xl text-gray-700 mb-8 leading-relaxed font-light drop-shadow">
-              {portfolioData.personal.title}
+function Header({
+  activeSection,
+  onNavigate,
+}: {
+  activeSection: string;
+  onNavigate: (section: string) => void;
+}) {
+  return (
+    <nav className="fixed left-0 right-0 top-0 z-50 border-b border-white/40 bg-white/65 backdrop-blur-xl">
+      <div className="mx-auto flex max-w-[1440px] items-center justify-between gap-4 px-5 py-4 sm:px-8 lg:px-[5vw]">
+        <button
+          type="button"
+          onClick={() => onNavigate("hero")}
+          className="shrink-0 text-left text-sm font-black uppercase tracking-tight text-[#252525] sm:text-base"
+        >
+          Jinhwan&apos;s
+          <span className="block text-[#645BE7]">Portfolio</span>
+        </button>
+
+        <div className="no-scrollbar -mr-2 flex max-w-full gap-1 overflow-x-auto pl-2 sm:mr-0 sm:gap-3 sm:overflow-visible">
+          {NAV_SECTIONS.map(section => (
+            <button
+              key={section}
+              type="button"
+              onClick={() => onNavigate(section)}
+              className={`shrink-0 rounded-full px-3 py-2 text-xs font-bold uppercase tracking-tight transition-colors sm:text-sm ${
+                activeSection === section
+                  ? "bg-[#252525] text-white"
+                  : "text-[#555] hover:bg-[#F1F0FF] hover:text-[#645BE7]"
+              }`}
+            >
+              {SECTION_LABELS[section]}
+            </button>
+          ))}
+        </div>
+      </div>
+    </nav>
+  );
+}
+
+function BackToTopButton({ onClick }: { onClick: () => void }) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-label="맨 위로 이동"
+      className="fixed bottom-5 right-5 z-50 flex h-12 w-12 items-center justify-center rounded-full border border-white/40 bg-white/70 text-[#252525] shadow-[0_12px_40px_rgba(40,40,40,0.16)] backdrop-blur-xl transition-all hover:-translate-y-1 hover:bg-[#252525] hover:text-white sm:bottom-8 sm:right-8 sm:h-14 sm:w-14"
+    >
+      <ArrowUp size={22} strokeWidth={2.2} />
+    </button>
+  );
+}
+
+function Hero() {
+  return (
+    <section
+      id="hero"
+      className="portfolio-section relative flex min-h-svh items-center overflow-hidden bg-[#F4F4F4] px-5 py-28 sm:px-8 lg:px-[8vw]"
+    >
+      <div className="pointer-events-none absolute inset-x-0 top-20 h-px bg-[#252525]/10" />
+      <div className="pointer-events-none absolute bottom-12 right-[-8vw] text-[22vw] font-black leading-none tracking-[-0.08em] text-white/80">
+        JH
+      </div>
+
+      <div className="relative z-10 mx-auto w-full max-w-[1320px]">
+        <p className="mb-6 text-sm font-black uppercase tracking-[0.4em] text-[#645BE7]">
+          Web Portfolio
+        </p>
+        <h1 className="max-w-5xl text-[clamp(4rem,12vw,10rem)] font-black leading-[0.9] tracking-[-0.08em] text-[#252525]">
+          JINHWAN&apos;S
+          <br />
+          PORTFOLIO
+        </h1>
+        <p className="mt-8 max-w-3xl text-base leading-8 text-[#555] sm:text-xl sm:leading-9">
+          {portfolioData.personal.title}
+          <br className="hidden sm:block" />
+          사용자 경험과 실제 동작을 함께 고민하며, 아이디어를 끝까지 구현하는
+          개발자입니다.
+        </p>
+        <div className="mt-10 flex flex-wrap gap-3">
+          {["Frontend", "Interactive", "Unity", "Problem Solver"].map(item => (
+            <span
+              key={item}
+              className="rounded-full border border-[#252525]/15 bg-white/70 px-4 py-2 text-sm font-bold text-[#333]"
+            >
+              {item}
+            </span>
+          ))}
+        </div>
+      </div>
+
+      <ChevronDown className="absolute bottom-8 left-1/2 h-6 w-6 -translate-x-1/2 animate-bounce text-[#645BE7]" />
+    </section>
+  );
+}
+
+function About() {
+  return (
+    <section id="about" className={SECTION_CLASS}>
+      <div className={SECTION_INNER_CLASS}>
+        <h2 className={SECTION_TITLE_CLASS}>ABOUT ME</h2>
+
+        <div className="grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-center">
+          <div className="relative min-h-[320px] overflow-hidden rounded-[32px] border border-[#ECECF5] bg-[#F7F6FF] p-8 sm:min-h-[420px] sm:p-10">
+            <div className="absolute inset-x-8 top-8 flex items-center justify-between text-xs font-black uppercase tracking-[0.25em] text-[#645BE7]">
+              <span>Developer</span>
+              <span>2026</span>
+            </div>
+            <div className="flex h-full min-h-[260px] flex-col justify-end">
+              <p className="text-[clamp(5rem,16vw,11rem)] font-black leading-none tracking-[-0.08em] text-[#252525]">
+                YJH
+              </p>
+              <p className="mt-4 text-2xl font-black text-[#645BE7]">
+                {portfolioData.personal.name}
+              </p>
+            </div>
+          </div>
+
+          <div>
+            <p className="mb-6 text-xl font-black leading-8 text-[#252525] sm:text-2xl sm:leading-10">
+              안녕하세요. 직접 만들고 부딪히며 성장하는 개발자
+              {portfolioData.personal.name}입니다.
             </p>
-          </div>
-        </div>
-
-        {/* Scroll indicator */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-          <ChevronDown size={24} className="text-gray-600" />
-        </div>
-      </section>
-
-      {/* About Section - Side Layout */}
-      <section
-        id="about"
-        className="h-screen flex items-center justify-center px-4"
-        style={{
-          backgroundColor: "#FFF5F8",
-        }}
-      >
-        <div className="max-w-7xl mx-auto w-full">
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-12 text-center">
-            About Me
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
-            {/* Left: Image/Icon */}
-            <div className="flex justify-center">
-              <div className="text-9xl">👨‍💻</div>
-            </div>
-            
-            {/* Right: Text */}
-            <div>
-              <p className="text-lg text-gray-700 leading-relaxed mb-6">
-                {portfolioData.personal.bio}
-              </p>
-              <p className="text-lg text-gray-700 leading-relaxed mb-6">
-                저는 사용자의 입장에서 생각하는 것이 중요하다고 믿습니다. 단순히 코드를 작성하는 것이 아니라, 
-                사용자 경험을 고려한 솔루션을 만드는 것을 좋아합니다.
-              </p>
-              <p className="text-lg text-gray-700 leading-relaxed">
-                새로운 기술을 배우고 지속적으로 성장하는 것을 즐기며, 팀과 함께 협력하여 더 좋은 결과물을 만드는 것에 보람을 느낍니다.
+            <div className="space-y-5 text-base leading-8 text-[#555] sm:text-lg">
+              <p>{portfolioData.personal.bio}</p>
+              <p>
+                단순히 화면을 만드는 것보다 사용자가 어떤 흐름으로 서비스를
+                이해하고 사용할지 생각하며 개발합니다. 작은 기능도 끝까지 다듬어
+                실제로 쓸 수 있는 결과물로 만드는 것을 좋아합니다.
               </p>
             </div>
-          </div>
-        </div>
-      </section>
 
-      {/* Education Section - Text List */}
-      <section
-        id="education"
-        className="h-screen flex items-center justify-center px-4"
-        style={{
-          backgroundColor: "#F0F8FF",
-        }}
-      >
-        <div className="max-w-7xl mx-auto w-full">
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-12 text-center">
-            Education
-          </h2>
-          <div className="space-y-8">
-            {portfolioData.education.map((edu) => (
-              <div key={edu.id} className="border-b border-gray-300 pb-6 last:border-b-0">
-                <h3 className="text-2xl font-bold text-gray-900 mb-2">{edu.school}</h3>
-                <p className="text-lg text-[#FFB3D9] font-semibold mb-2">{edu.major}</p>
-                <p className="text-gray-600">{edu.period}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Skills Section - Carousel and Categories Combined */}
-      <section
-        id="skills"
-        className="h-screen flex items-center justify-center px-4"
-        style={{
-          backgroundImage: `url('https://d2xsxph8kpxj0f.cloudfront.net/310519663224932168/Ap8iWxtFKkKptEPsmR3DAr/skills-bg-g9mJpLYKwD85aDSeLGQDAg.webp')`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-      >
-        <div className="max-w-7xl mx-auto w-full">
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-12 text-center">
-            Skills
-          </h2>
-          
-          {/* Continuous Carousel */}
-          <div className="bg-white rounded-2xl p-8 md:p-12 shadow-lg overflow-hidden mb-12">
-            <div className="relative">
-              {/* Carousel Container */}
-              <div className="overflow-hidden">
-                <div className="skills-carousel flex gap-8 w-fit">
-                  {/* Duplicate skills for seamless loop */}
-                  {[...portfolioData.skills, ...portfolioData.skills].map((skillGroup, groupIdx) =>
-                    skillGroup.items.map((skill, idx) => (
-                      <div
-                        key={`${groupIdx}-${idx}`}
-                        className="flex flex-col items-center gap-3 p-4 flex-shrink-0"
-                      >
-                        {skill.icon.startsWith('http') ? (
-                          <img src={skill.icon} alt={skill.name} className="w-16 h-16 object-contain" />
-                        ) : (
-                          <span className="text-5xl">{skill.icon}</span>
-                        )}
-                        <span className="text-gray-700 font-medium text-center whitespace-nowrap">
-                          {skill.name}
-                        </span>
-                      </div>
-                    ))
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          {/* Skills Categories */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {portfolioData.skills.map((skillGroup, idx) => (
-              <div key={idx}>
-                <h4 className="font-bold text-gray-900 mb-6 text-center text-lg text-[#FFB3D9]">{skillGroup.category}</h4>
-                <div className="flex flex-wrap gap-3 justify-center">
-                  {skillGroup.items.map((skill, skillIdx) => (
-                    <span
-                      key={skillIdx}
-                      className="px-4 py-2 bg-[#FFE5F0] text-gray-700 rounded-full text-sm font-medium hover:bg-[#FFB3D9] hover:text-white transition-colors"
-                    >
-                      {skill.name}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Projects Section - Part 1 */}
-      <section
-        id="projects"
-        className="h-screen flex items-center justify-center px-4"
-        style={{
-          backgroundColor: "#F5F0FF",
-        }}
-      >
-        <div className="max-w-7xl mx-auto w-full">
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-12 text-center">
-            Projects
-          </h2>
-          <div className="space-y-8">
-            {portfolioData.projects.slice(0, 2).map((project) => (
-              <div key={project.id} className="border-b border-gray-300 pb-8 last:border-b-0">
-                <div className="flex items-start gap-4 mb-4">
-                  <span className="text-5xl flex-shrink-0">{project.image}</span>
-                  <div className="flex-1">
-                    <h3 className="text-2xl font-bold text-gray-900 mb-2">{project.title}</h3>
-                    <p className="text-gray-600 mb-4">{project.description}</p>
+            <div className="mt-10 grid gap-4 sm:grid-cols-2">
+              <InfoPanel title="Education">
+                {portfolioData.education.map(edu => (
+                  <div key={edu.id}>
+                    <p className="font-black text-[#252525]">{edu.school}</p>
+                    <p className="mt-1 text-sm text-[#666]">
+                      {edu.major} · {edu.period}
+                    </p>
                   </div>
-                </div>
-                <div className="flex flex-wrap gap-2 ml-20 mb-4">
-                  {project.technologies.map((tech, idx) => (
-                    <span key={idx} className="px-3 py-1 bg-[#F0E5FF] text-gray-700 rounded-full text-sm font-medium">
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-                <div className="ml-20">
-                  <a
-                    href={project.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-4 py-2 bg-[#FFB3D9] text-white rounded-lg font-semibold hover:bg-[#FF99C8] transition-colors"
-                  >
-                    <ExternalLink size={16} />
-                    GitHub
-                  </a>
-                </div>
-              </div>
-            ))}
+                ))}
+              </InfoPanel>
+              <InfoPanel title="Contact">
+                <a
+                  href={`mailto:${portfolioData.personal.email}`}
+                  className="inline-flex items-center gap-2 font-black text-[#645BE7]"
+                >
+                  {portfolioData.personal.email}
+                  <ArrowUpRight size={18} />
+                </a>
+              </InfoPanel>
+            </div>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
+  );
+}
 
-      {/* Projects Section - Part 2 */}
-      <section
-        id="projects-2"
-        className="h-screen flex items-center justify-center px-4"
-        style={{
-          backgroundColor: "#F5F0FF",
-        }}
-      >
-        <div className="max-w-7xl mx-auto w-full">
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-12 text-center">
-            Projects
-          </h2>
-          <div className="space-y-8">
-            {portfolioData.projects.slice(2).map((project) => (
-              <div key={project.id} className="border-b border-gray-300 pb-8 last:border-b-0">
-                <div className="flex items-start gap-4 mb-4">
-                  <span className="text-5xl flex-shrink-0">{project.image}</span>
-                  <div className="flex-1">
-                    <h3 className="text-2xl font-bold text-gray-900 mb-2">{project.title}</h3>
-                    <p className="text-gray-600 mb-4">{project.description}</p>
-                  </div>
-                </div>
-                <div className="flex flex-wrap gap-2 ml-20 mb-4">
-                  {project.technologies.map((tech, idx) => (
-                    <span key={idx} className="px-3 py-1 bg-[#F0E5FF] text-gray-700 rounded-full text-sm font-medium">
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-                <div className="ml-20">
-                  <a
-                    href={project.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-4 py-2 bg-[#FFB3D9] text-white rounded-lg font-semibold hover:bg-[#FF99C8] transition-colors"
-                  >
-                    <ExternalLink size={16} />
-                    GitHub
-                  </a>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Activity Section - Part 1 */}
-      <section
-        id="activity"
-        className="h-screen flex items-center justify-center px-4"
-        style={{
-          backgroundColor: "#F0F8FF",
-        }}
-      >
-        <div className="max-w-7xl mx-auto w-full">
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-12 text-center">
-            Activity
-          </h2>
-          <div className="space-y-8">
-            {portfolioData.activities.slice(0, 2).map((activity, idx) => (
-              <div key={idx} className="border-b border-gray-300 pb-8 last:border-b-0">
-                <h3 className="text-2xl font-bold text-gray-900 mb-2">{activity.title}</h3>
-                <p className="text-gray-600">{activity.period}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Activity Section - Part 2 */}
-      <section
-        id="activity-2"
-        className="h-screen flex items-center justify-center px-4"
-        style={{
-          backgroundColor: "#F0F8FF",
-        }}
-      >
-        <div className="max-w-7xl mx-auto w-full">
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-12 text-center">
-            Activity
-          </h2>
-          <div className="space-y-8">
-            {portfolioData.activities.slice(2).map((activity, idx) => (
-              <div key={idx} className="border-b border-gray-300 pb-8 last:border-b-0">
-                <h3 className="text-2xl font-bold text-gray-900 mb-2">{activity.title}</h3>
-                <p className="text-gray-600">{activity.period}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Contact Section */}
-      <section
-        id="contact"
-        className="h-screen flex items-center justify-center px-4"
-        style={{
-          backgroundColor: "#FFF5F8",
-        }}
-      >
-        <div className="max-w-7xl mx-auto w-full text-center">
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-8">
-            Contact
-          </h2>
-          <p className="text-xl text-gray-700 mb-12 leading-relaxed">
-            새로운 프로젝트나 협업 기회에 항상 열려있습니다. 
-            <br />
-            아래의 연락처를 통해 저에게 연락주세요!
-          </p>
-          
-          <div className="flex justify-center gap-6 flex-wrap">
-            <a
-              href="mailto:your-email@example.com"
-              className="flex items-center gap-2 px-6 py-3 bg-[#FFB3D9] text-white rounded-lg font-semibold hover:bg-[#FF99C8] transition-colors"
-            >
-              <Mail size={20} />
-              Email
-            </a>
-            <a
-              href="https://github.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 px-6 py-3 bg-gray-800 text-white rounded-lg font-semibold hover:bg-gray-900 transition-colors"
-            >
-              <Github size={20} />
-              GitHub
-            </a>
-            <a
-              href="https://linkedin.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 px-6 py-3 bg-[#0A66C2] text-white rounded-lg font-semibold hover:bg-[#094399] transition-colors"
-            >
-              <Linkedin size={20} />
-              LinkedIn
-            </a>
-          </div>
-        </div>
-      </section>
+function InfoPanel({
+  title,
+  children,
+}: {
+  title: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="rounded-2xl border border-[#ECECF5] bg-white p-5 shadow-[0_12px_40px_rgba(40,40,40,0.04)]">
+      <h3 className="mb-4 text-sm font-black uppercase tracking-[0.2em] text-[#999]">
+        {title}
+      </h3>
+      {children}
     </div>
+  );
+}
+
+function Skills() {
+  return (
+    <section id="skills" className={`${SECTION_CLASS} bg-[#FAFAFA]`}>
+      <div className={SECTION_INNER_CLASS}>
+        <h2 className="mb-6 text-4xl font-black tracking-tight text-[#252525] sm:text-5xl lg:text-6xl">
+          SKILLS
+        </h2>
+        <p className="mb-10 max-w-2xl text-base leading-8 text-[#666] sm:text-lg">
+          프로젝트에서 실제로 사용해 본 기술을 중심으로 정리했습니다.
+        </p>
+      </div>
+
+      <SkillMarquee skills={skills} />
+
+      <div className={`${SECTION_INNER_CLASS} mt-10`}>
+        <div className="grid gap-4 lg:grid-cols-3">
+          {portfolioData.skills.map(group => (
+            <div
+              key={group.category}
+              className="rounded-[24px] border border-[#ECECF5] bg-white p-5 shadow-[0_12px_40px_rgba(40,40,40,0.04)]"
+            >
+              <div className="mb-5 flex items-center justify-between gap-4">
+                <h3 className="text-xl font-black text-[#252525]">
+                  {group.category}
+                </h3>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {group.items.map(skill => (
+                  <span
+                    key={skill.name}
+                    className="inline-flex items-center gap-2 rounded-full bg-[#F7F7FA] px-3 py-2 text-sm font-bold text-[#333] ring-1 ring-[#ECECF5]"
+                  >
+                    <img
+                      src={skill.icon}
+                      alt={skill.name}
+                      className="h-4 w-4 shrink-0 object-contain"
+                    />
+                    {skill.name}
+                  </span>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function SkillMarquee({ skills }: { skills: Skill[] }) {
+  return (
+    <div className="skill-marquee overflow-hidden">
+      <div className="skills-carousel flex w-fit gap-5 px-5">
+        {[...skills, ...skills].map((skill, index) => (
+          <div
+            key={`${skill.name}-${index}`}
+            className="flex w-max min-w-[180px] max-w-[240px] items-center gap-3 rounded-2xl border border-[#ECECF5] bg-white px-5 py-4 shadow-[0_12px_40px_rgba(40,40,40,0.04)] sm:min-w-[200px] sm:max-w-[280px]"
+          >
+            <img
+              src={skill.icon}
+              alt={skill.name}
+              className="h-9 w-9 shrink-0 object-contain"
+            />
+            <span className="min-w-0 truncate whitespace-nowrap text-base font-black text-[#252525]">
+              {skill.name}
+            </span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function Projects() {
+  return (
+    <section
+      id="projects"
+      className={`${SECTION_CLASS} bg-[#212121] text-white`}
+    >
+      <div className={SECTION_INNER_CLASS}>
+        <h2 className="mb-8 text-4xl font-black tracking-tight text-white sm:mb-12 sm:text-5xl lg:text-6xl">
+          PROJECT
+        </h2>
+        <ProjectList projects={projectsByLatest} />
+      </div>
+    </section>
+  );
+}
+
+function ProjectList({ projects }: { projects: Project[] }) {
+  return (
+    <div className="border-b border-white/20">
+      {projects.map(project => {
+        const ProjectIcon = PROJECT_ICONS[project.icon] ?? ExternalLink;
+
+        return (
+          <a
+            key={project.id}
+            href={project.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group grid gap-4 border-t border-white/20 py-6 transition-colors hover:text-[#9891F9] sm:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)_auto] sm:items-center sm:py-8"
+          >
+            <div className="flex items-center gap-4">
+              <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-white/20 bg-white/5 text-[#9891F9] transition-colors group-hover:border-[#9891F9] group-hover:bg-[#9891F9] group-hover:text-white">
+                <ProjectIcon size={24} strokeWidth={1.8} />
+              </span>
+              <div>
+                <h3 className="text-2xl font-black tracking-tight sm:text-3xl">
+                  {project.title}
+                </h3>
+                <p className="mt-2 line-clamp-2 text-sm leading-6 text-white/60">
+                  {project.description}
+                </p>
+              </div>
+            </div>
+
+            <div className="flex flex-wrap gap-2">
+              {project.technologies.map(tech => (
+                <span
+                  key={tech}
+                  className="rounded-full bg-white/10 px-3 py-1.5 text-sm font-bold text-white/75"
+                >
+                  #{tech}
+                </span>
+              ))}
+            </div>
+
+            <div className="flex items-center gap-3 text-sm font-black text-white/50 sm:justify-end">
+              {project.year}
+              <ArrowUpRight className="h-5 w-5 transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" />
+            </div>
+          </a>
+        );
+      })}
+    </div>
+  );
+}
+
+function Activity() {
+  return (
+    <section id="activity" className={SECTION_CLASS}>
+      <div className={SECTION_INNER_CLASS}>
+        <h2 className={SECTION_TITLE_CLASS}>ACTIVITY</h2>
+        <div className="grid gap-5 md:grid-cols-3">
+          {portfolioData.activities.map(activity => (
+            <ActivityCard key={activity.id} activity={activity} />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ActivityCard({ activity }: { activity: Activity }) {
+  return (
+    <article className="rounded-[28px] border border-[#ECECF5] bg-white p-6 shadow-[0_12px_40px_rgba(40,40,40,0.04)]">
+      <p className="mb-6 inline-flex rounded-full bg-[#F1F0FF] px-3 py-1 text-sm font-black text-[#645BE7]">
+        {activity.type}
+      </p>
+      <h3 className="text-2xl font-black text-[#252525]">{activity.title}</h3>
+      <p className="mt-4 text-sm font-bold text-[#999]">{activity.period}</p>
+      <p className="mt-5 leading-7 text-[#666]">{activity.description}</p>
+    </article>
+  );
+}
+
+function Contact() {
+  return (
+    <section
+      id="contact"
+      className="portfolio-section flex min-h-svh items-center px-5 py-24 sm:px-8 lg:px-[8vw]"
+    >
+      <div className="mx-auto w-full max-w-[1320px]">
+        <p className="mb-8 text-2xl font-black leading-tight text-[#252525] sm:text-4xl">
+          함께 만들 프로젝트가 있다면,
+          <br />
+          언제든 편하게 연락해 주세요.
+        </p>
+
+        <a
+          href={`mailto:${portfolioData.personal.email}`}
+          className="block break-all text-[clamp(2.3rem,8vw,6.5rem)] font-black leading-none tracking-[-0.06em] text-[#645BE7] transition-colors hover:text-[#9891F9]"
+        >
+          {portfolioData.personal.email}
+        </a>
+
+        <div className="mt-12 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <ContactLink
+            href={`mailto:${portfolioData.personal.email}`}
+            icon={Mail}
+          >
+            Mail
+          </ContactLink>
+          <ContactLink href={portfolioData.personal.github} icon={Github}>
+            GitHub
+          </ContactLink>
+          <ContactLink href={portfolioData.personal.instagram} icon={Instagram}>
+            Instagram
+          </ContactLink>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ContactLink({
+  href,
+  icon: Icon,
+  children,
+}: {
+  href: string;
+  icon: LucideIcon;
+  children: React.ReactNode;
+}) {
+  return (
+    <a
+      href={href}
+      target={href.startsWith("mailto:") ? undefined : "_blank"}
+      rel={href.startsWith("mailto:") ? undefined : "noopener noreferrer"}
+      className="inline-flex items-center justify-center gap-2 rounded-full border border-[#252525]/10 px-5 py-3 font-black text-[#252525] transition-colors hover:border-[#645BE7] hover:bg-[#645BE7] hover:text-white"
+    >
+      <Icon size={18} />
+      {children}
+    </a>
   );
 }

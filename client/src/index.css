@@ -44,24 +44,24 @@
 
 :root {
   /* Pastel Color Palette */
-  --pastel-pink: #FFD4E5;
-  --pastel-pink-light: #FFE5EC;
-  --pastel-blue: #D4E8FF;
-  --pastel-lavender: #E8D5F2;
-  --pastel-mint: #D5F0E8;
-  --pastel-cream: #FFFBF0;
-  --dark-slate: #3D3D4D;
-  --text-primary: #2D2D3D;
-  
-  --primary: #FFB3D9;
-  --primary-foreground: #FFFBF0;
-  --sidebar-primary: #FFB3D9;
-  --sidebar-primary-foreground: #FFFBF0;
-  --chart-1: #FFB3D9;
-  --chart-2: #B3D9FF;
-  --chart-3: #D4B3FF;
-  --chart-4: #B3FFD9;
-  --chart-5: #FFD9B3;
+  --pastel-pink: #ffd4e5;
+  --pastel-pink-light: #ffe5ec;
+  --pastel-blue: #d4e8ff;
+  --pastel-lavender: #e8d5f2;
+  --pastel-mint: #d5f0e8;
+  --pastel-cream: #fffbf0;
+  --dark-slate: #3d3d4d;
+  --text-primary: #2d2d3d;
+
+  --primary: #ffb3d9;
+  --primary-foreground: #fffbf0;
+  --sidebar-primary: #ffb3d9;
+  --sidebar-primary-foreground: #fffbf0;
+  --chart-1: #ffb3d9;
+  --chart-2: #b3d9ff;
+  --chart-3: #d4b3ff;
+  --chart-4: #b3ffd9;
+  --chart-5: #ffd9b3;
   --radius: 0.75rem;
   --background: oklch(0.99 0.001 60);
   --foreground: oklch(0.25 0.01 65);
@@ -73,19 +73,19 @@
   --secondary-foreground: oklch(0.3 0.01 65);
   --muted: oklch(0.92 0.002 280);
   --muted-foreground: oklch(0.5 0.01 280);
-  --accent: #FFB3D9;
+  --accent: #ffb3d9;
   --accent-foreground: oklch(1 0 0);
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.985 0 0);
   --border: oklch(0.93 0.002 280);
   --input: oklch(0.93 0.002 280);
-  --ring: #FFB3D9;
+  --ring: #ffb3d9;
   --sidebar: oklch(0.99 0.001 60);
   --sidebar-foreground: oklch(0.25 0.01 65);
-  --sidebar-accent: #FFB3D9;
+  --sidebar-accent: #ffb3d9;
   --sidebar-accent-foreground: oklch(1 0 0);
   --sidebar-border: oklch(0.93 0.002 280);
-  --sidebar-ring: #FFB3D9;
+  --sidebar-ring: #ffb3d9;
 }
 
 .dark {
@@ -104,7 +104,7 @@
   --muted: oklch(0.274 0.006 286.033);
   --muted-foreground: oklch(0.705 0.015 286.067);
   --accent: oklch(0.274 0.006 286.033);
-  --accent-foreground:  oklch(0.92 0.005 65);
+  --accent-foreground: oklch(0.92 0.005 65);
   --destructive: oklch(0.704 0.191 22.216);
   --destructive-foreground: oklch(0.985 0 0);
   --border: oklch(1 0 0 / 10%);
@@ -118,7 +118,7 @@
   --sidebar: oklch(0.21 0.006 285.885);
   --sidebar-foreground: oklch(0.85 0.005 65);
   --sidebar-accent: oklch(0.274 0.006 286.033);
-  --sidebar-accent-foreground:  oklch(0.985 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.488 0.243 264.376);
 }
@@ -127,30 +127,43 @@
   * {
     @apply border-border outline-ring/50;
   }
-  
+
   html {
     scroll-behavior: smooth;
     scroll-snap-type: y mandatory;
   }
-  
+
   body {
     @apply bg-background text-foreground;
-    font-family: 'Pretendard', sans-serif;
+    font-family: "Pretendard", sans-serif;
+    margin: 0;
+    overflow-x: hidden;
   }
-  
-  h1, h2, h3, h4, h5, h6 {
-    font-family: 'Playfair Display', serif;
-    font-weight: 700;
+
+  html,
+  body,
+  #root {
+    min-height: 100%;
   }
-  
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: "Pretendard", sans-serif;
+    font-weight: 900;
+  }
+
   h1 {
     @apply text-4xl md:text-5xl lg:text-6xl;
   }
-  
+
   h2 {
     @apply text-3xl md:text-4xl;
   }
-  
+
   h3 {
     @apply text-2xl md:text-3xl;
   }
@@ -168,19 +181,41 @@
 }
 
 @layer components {
-  /* Scroll Snap Container */
   html {
-    scroll-snap-type: y mandatory;
     scroll-behavior: smooth;
+    scroll-snap-type: y mandatory;
   }
 
-  section {
+  .portfolio-page > .portfolio-section {
+    min-height: 100svh;
     scroll-snap-align: start;
     scroll-snap-stop: always;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+  }
+
+  @supports not (min-height: 100svh) {
+    .portfolio-page > .portfolio-section,
+    .min-h-svh {
+      min-height: 100vh;
+    }
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .skill-marquee {
+    mask-image: linear-gradient(
+      to right,
+      hsl(0 0% 0% / 0),
+      hsl(0 0% 0% / 1) 12%,
+      hsl(0 0% 0% / 1) 88%,
+      hsl(0 0% 0% / 0)
+    );
   }
 
   /* Skills Carousel Animation */
@@ -189,12 +224,24 @@
       transform: translateX(0);
     }
     100% {
-      transform: translateX(calc(-50% - 16px));
+      transform: translateX(-50%);
     }
   }
 
   .skills-carousel {
-    animation: skills-carousel 80s linear infinite;
+    animation: skills-carousel 45s linear infinite;
+  }
+
+  .skills-carousel:hover {
+    animation-play-state: paused;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .skills-carousel,
+    .animate-hero-entrance,
+    .animate-fade-in-up {
+      animation: none;
+    }
   }
 
   /* Fade in up animation for hero */
