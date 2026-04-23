@@ -93,25 +93,37 @@ export default function Home() {
   const snapRestoreTimeoutRef = useRef<number | null>(null);
 
   useEffect(() => {
-    const handleScroll = () => {
-      for (const section of NAV_SECTIONS) {
-        const element = document.getElementById(section);
+    const sections = NAV_SECTIONS.map(section =>
+      document.getElementById(section)
+    ).filter((element): element is HTMLElement => element !== null);
 
-        if (!element) {
-          continue;
+    if (sections.length === 0) {
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      entries => {
+        const visibleEntries = entries
+          .filter(entry => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+
+        if (visibleEntries.length === 0) {
+          return;
         }
 
-        const rect = element.getBoundingClientRect();
-        if (rect.top <= 120 && rect.bottom >= 120) {
-          setActiveSection(section);
-          break;
-        }
+        setActiveSection(
+          visibleEntries[0].target.id as (typeof NAV_SECTIONS)[number]
+        );
+      },
+      {
+        rootMargin: "-18% 0px -52% 0px",
+        threshold: [0.2, 0.35, 0.5, 0.75],
       }
-    };
+    );
 
-    handleScroll();
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    sections.forEach(section => observer.observe(section));
+
+    return () => observer.disconnect();
   }, []);
 
   useEffect(() => {
@@ -244,11 +256,11 @@ function Hero() {
     >
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute left-[-6rem] top-20 h-64 w-64 rounded-full bg-[#645BE7]/10 blur-3xl sm:h-80 sm:w-80"
+        className="pointer-events-none absolute left-[-6rem] top-20 h-64 w-64 rounded-full bg-[#645BE7]/10 opacity-80 sm:h-80 sm:w-80"
       />
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute bottom-[-5rem] right-[8%] h-72 w-72 rounded-full bg-[#FFCFD8]/35 blur-3xl sm:h-96 sm:w-96"
+        className="pointer-events-none absolute bottom-[-5rem] right-[8%] h-72 w-72 rounded-full bg-[#FFCFD8]/35 opacity-80 sm:h-96 sm:w-96"
       />
       <div className="pointer-events-none absolute inset-x-0 top-20 h-px bg-[#252525]/10" />
       <div
@@ -352,7 +364,7 @@ function About() {
           >
             <div
               aria-hidden="true"
-              className="pointer-events-none absolute -right-14 -top-14 h-36 w-36 rounded-full bg-white/60 blur-3xl"
+              className="pointer-events-none absolute -right-14 -top-14 h-36 w-36 rounded-full bg-white/60 opacity-80"
             />
             <div className="absolute inset-x-8 top-8 flex items-center justify-between text-xs font-black uppercase tracking-[0.25em] text-[#645BE7]">
               <span>Frontend</span>
@@ -686,11 +698,11 @@ function Contact() {
     >
       <div
         aria-hidden="true"
-        className="floating-orb pointer-events-none absolute -left-20 top-16 h-56 w-56 rounded-full bg-[#645BE7]/10 blur-3xl"
+        className="pointer-events-none absolute -left-20 top-16 h-56 w-56 rounded-full bg-[#645BE7]/10 opacity-80"
       />
       <div
         aria-hidden="true"
-        className="floating-orb pointer-events-none absolute bottom-4 right-0 h-72 w-72 rounded-full bg-[#FFCFD8]/55 blur-3xl"
+        className="pointer-events-none absolute bottom-4 right-0 h-72 w-72 rounded-full bg-[#FFCFD8]/45 opacity-80"
       />
 
       <div className="mx-auto w-full max-w-[1320px]">
