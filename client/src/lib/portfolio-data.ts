@@ -2,17 +2,17 @@
 export const portfolioData = {
   personal: {
     name: "윤진환",
-    title: "아이디어를 직접 구현해, 재미와 실용성을 함께 만드는 개발자",
+    title: "사용자 경험과 인터랙션 구현에 강한 프론트엔드 개발자",
     email: "www139455@naver.com",
     github: "https://github.com/jinhwan",
     instagram: "https://www.instagram.com/angler_jinhwan/",
-    bio: "사용자의 입장으로 생각하는 것이 중요하다고 생각합니다. 새로운 기술을 배우고, 이를 실제 프로젝트에 적용하여 의미 있는 결과를 만드는 것을 좋아합니다.",
+    bio: "웹 프론트엔드를 중심으로 사용자 흐름과 화면 상호작용을 설계하고 구현하는 과정에 강점이 있습니다. 새로운 기술도 프로젝트에 맞게 빠르게 익혀 적용하며, 완성도 있는 결과물로 연결하는 것을 중요하게 생각합니다.",
   },
 
   education: [
     {
       id: 1,
-      school: "대학교",
+      school: "신라대학교",
       major: "컴퓨터공학과",
       period: "2023.03 - 2027.02",
       description: "웹 개발과 소프트웨어 엔지니어링 전공",
@@ -145,10 +145,11 @@ export const portfolioData = {
   activities: [
     {
       id: 1,
-      title: "웹 개발 스터디 그룹 운영",
-      description: "월 1회 정기 모임을 통해 웹 개발 기술 공유",
-      period: "2023 - 현재",
-      type: "활동",
+      title: "컴퓨터공학과 부학회장",
+      description:
+        "학과 행사와 운영 업무를 함께 조율하며, 구성원과 학생회 사이의 소통을 맡아 협업과 책임감을 쌓고 있습니다.",
+      period: "2026 - 현재",
+      type: "리더십",
     },
     {
       id: 2,

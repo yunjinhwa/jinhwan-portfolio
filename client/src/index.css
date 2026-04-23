@@ -86,6 +86,7 @@
   --sidebar-accent-foreground: oklch(1 0 0);
   --sidebar-border: oklch(0.93 0.002 280);
   --sidebar-ring: #ffb3d9;
+  --portfolio-header-offset: clamp(72px, 8vw, 96px);
 }
 
 .dark {
@@ -167,6 +168,7 @@
   h3 {
     @apply text-2xl md:text-3xl;
   }
+
   button:not(:disabled),
   [role="button"]:not([aria-disabled="true"]),
   [type="button"]:not(:disabled),
@@ -187,9 +189,14 @@
   }
 
   .portfolio-page > .portfolio-section {
+    position: relative;
     min-height: 100svh;
     scroll-snap-align: start;
     scroll-snap-stop: always;
+  }
+
+  html.is-programmatic-scrolling {
+    scroll-snap-type: none;
   }
 
   @supports not (min-height: 100svh) {
@@ -208,6 +215,25 @@
     display: none;
   }
 
+  .hero-grid {
+    background-image:
+      linear-gradient(to right, rgb(37 37 37 / 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(37 37 37 / 0.05) 1px, transparent 1px),
+      radial-gradient(
+        circle at top left,
+        rgb(100 91 231 / 0.14),
+        transparent 38%
+      );
+    background-size:
+      clamp(70px, 10vw, 120px) clamp(70px, 10vw, 120px),
+      clamp(70px, 10vw, 120px) clamp(70px, 10vw, 120px),
+      auto;
+    background-position:
+      center center,
+      center center,
+      center top;
+  }
+
   .skill-marquee {
     mask-image: linear-gradient(
       to right,
@@ -218,11 +244,11 @@
     );
   }
 
-  /* Skills Carousel Animation */
   @keyframes skills-carousel {
     0% {
       transform: translateX(0);
     }
+
     100% {
       transform: translateX(-50%);
     }
@@ -236,67 +262,75 @@
     animation-play-state: paused;
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    .skills-carousel,
-    .animate-hero-entrance,
-    .animate-fade-in-up {
-      animation: none;
+  @keyframes float-drift {
+    0%,
+    100% {
+      transform: translate3d(0, 0, 0);
+    }
+
+    50% {
+      transform: translate3d(0, -16px, 0);
     }
   }
 
-  /* Fade in up animation for hero */
-  @keyframes fade-in-up {
-    from {
-      opacity: 0;
-      transform: translateY(30px);
-    }
-    to {
-      opacity: 1;
+  .floating-orb {
+    animation: float-drift 14s ease-in-out infinite;
+    will-change: transform;
+  }
+
+  @keyframes arrow-float {
+    0%,
+    100% {
       transform: translateY(0);
     }
-  }
 
-  .animate-fade-in-up {
-    animation: fade-in-up 1s ease-out;
-  }
-
-  /* Hero entrance animation - sophisticated multi-stage */
-  @keyframes hero-entrance {
-    0% {
-      opacity: 0;
-      transform: translateY(40px) scale(0.95);
-    }
     50% {
-      opacity: 0.7;
-    }
-    100% {
-      opacity: 1;
-      transform: translateY(0) scale(1);
+      transform: translateY(10px);
     }
   }
 
-  .animate-hero-entrance {
-    animation: hero-entrance 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  .arrow-float {
+    animation: arrow-float 2.6s ease-in-out infinite;
   }
 
-  /**
-   * Custom container utility that centers content and adds responsive padding.
-   *
-   * This overrides Tailwind's default container behavior to:
-   * - Auto-center content (mx-auto)
-   * - Add responsive horizontal padding
-   * - Set max-width for large screens
-   *
-   * Usage: <div className="container">...</div>
-   *
-   * For custom widths, use max-w-* utilities directly:
-   * <div className="max-w-6xl mx-auto px-4">...</div>
-   */
+  .project-link {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .project-link::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgb(152 145 249 / 0.08) 50%,
+      transparent 100%
+    );
+    opacity: 0;
+    transform: translateX(-18%);
+    transition:
+      transform 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+      opacity 0.3s ease;
+    pointer-events: none;
+  }
+
+  .project-link:hover::before {
+    opacity: 1;
+    transform: translateX(18%);
+  }
+
+  .project-link > * {
+    position: relative;
+    z-index: 1;
+  }
+
   .container {
     width: 100%;
     margin-left: auto;
     margin-right: auto;
-    padding-left: 1rem; /* 16px - mobile padding */
+    padding-left: 1rem;
     padding-right: 1rem;
   }
 
@@ -307,16 +341,30 @@
 
   @media (min-width: 640px) {
     .container {
-      padding-left: 1.5rem; /* 24px - tablet padding */
+      padding-left: 1.5rem;
       padding-right: 1.5rem;
     }
   }
 
   @media (min-width: 1024px) {
     .container {
-      padding-left: 2rem; /* 32px - desktop padding */
+      padding-left: 2rem;
       padding-right: 2rem;
-      max-width: 1280px; /* Standard content width */
+      max-width: 1280px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .skills-carousel,
+    .floating-orb,
+    .arrow-float {
+      animation: none;
+    }
+
+    .project-link::before {
+      transition: none;
+      opacity: 0;
+      transform: none;
     }
   }
 }
