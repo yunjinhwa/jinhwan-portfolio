@@ -170,8 +170,9 @@
 @layer components {
   /* Scroll Snap Container */
   html {
-    scroll-snap-type: y mandatory;
+    scroll-snap-type: y proximity;
     scroll-behavior: smooth;
+    scroll-padding-top: 0;
   }
 
   section {
@@ -181,6 +182,10 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+  }
+
+  section:first-of-type {
+    scroll-snap-align: start;
   }
 
   /* Skills Carousel Animation */
