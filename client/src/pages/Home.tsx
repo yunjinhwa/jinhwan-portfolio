@@ -1,10 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import {
-  motion,
-  useReducedMotion,
-  useScroll,
-  useTransform,
-} from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import {
   ArrowUpRight,
   BadgeCheck,
@@ -186,7 +181,7 @@ function Header({
       initial={shouldReduceMotion ? false : { opacity: 0, y: -20 }}
       animate={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
       transition={{ duration: 0.7, delay: 0.08, ease: EASE_OUT }}
-      className="fixed left-0 right-0 top-0 z-50 border-b border-white/40 bg-white/65 backdrop-blur-xl"
+      className="fixed left-0 right-0 top-0 z-50 border-b border-white/70 bg-white/92"
     >
       <div className="mx-auto flex max-w-[1440px] items-center justify-between gap-4 px-5 py-4 sm:px-8 lg:px-[5vw]">
         <button
@@ -232,7 +227,7 @@ function BackToTopButton({ onClick }: { onClick: () => void }) {
       transition={{ duration: 0.6, delay: 0.45, ease: EASE_OUT }}
       whileHover={shouldReduceMotion ? undefined : { y: -6, scale: 1.05 }}
       whileTap={shouldReduceMotion ? undefined : { scale: 0.96 }}
-      className="fixed bottom-5 right-5 z-50 flex h-12 w-12 items-center justify-center rounded-full border border-white/40 bg-white/70 text-[#252525] shadow-[0_12px_40px_rgba(40,40,40,0.16)] backdrop-blur-xl transition-colors hover:bg-[#252525] hover:text-white sm:bottom-8 sm:right-8 sm:h-14 sm:w-14"
+      className="fixed bottom-5 right-5 z-50 flex h-12 w-12 items-center justify-center rounded-full border border-white/70 bg-white/92 text-[#252525] shadow-[0_12px_40px_rgba(40,40,40,0.16)] transition-colors hover:bg-[#252525] hover:text-white sm:bottom-8 sm:right-8 sm:h-14 sm:w-14"
     >
       <ArrowUp size={22} strokeWidth={2.2} />
     </motion.button>
@@ -241,73 +236,29 @@ function BackToTopButton({ onClick }: { onClick: () => void }) {
 
 function Hero() {
   const shouldReduceMotion = useReducedMotion();
-  const heroRef = useRef<HTMLElement | null>(null);
-  const { scrollYProgress } = useScroll({
-    target: heroRef,
-    offset: ["start start", "end start"],
-  });
-  const contentY = useTransform(
-    scrollYProgress,
-    [0, 1],
-    [0, shouldReduceMotion ? 0 : -84]
-  );
-  const monogramY = useTransform(
-    scrollYProgress,
-    [0, 1],
-    [0, shouldReduceMotion ? 0 : 140]
-  );
-  const orbOneY = useTransform(
-    scrollYProgress,
-    [0, 1],
-    [0, shouldReduceMotion ? 0 : -52]
-  );
-  const orbTwoY = useTransform(
-    scrollYProgress,
-    [0, 1],
-    [0, shouldReduceMotion ? 0 : 74]
-  );
 
   return (
-    <motion.section
-      ref={heroRef}
+    <section
       id="hero"
       className="portfolio-section hero-grid relative flex min-h-svh items-center overflow-hidden bg-[#F4F4F4] px-5 py-28 sm:px-8 lg:px-[8vw]"
     >
-      <motion.div
+      <div
         aria-hidden="true"
-        className="floating-orb pointer-events-none absolute left-[-6rem] top-20 h-64 w-64 rounded-full bg-[#645BE7]/12 blur-3xl sm:h-80 sm:w-80"
-        style={{ y: orbOneY }}
-        animate={
-          shouldReduceMotion
-            ? undefined
-            : { x: [0, 24, 0], scale: [1, 1.08, 1] }
-        }
-        transition={{ duration: 16, repeat: Infinity, ease: "easeInOut" }}
+        className="pointer-events-none absolute left-[-6rem] top-20 h-64 w-64 rounded-full bg-[#645BE7]/10 blur-3xl sm:h-80 sm:w-80"
       />
-      <motion.div
+      <div
         aria-hidden="true"
-        className="floating-orb pointer-events-none absolute bottom-[-5rem] right-[8%] h-72 w-72 rounded-full bg-[#FFCFD8]/45 blur-3xl sm:h-96 sm:w-96"
-        style={{ y: orbTwoY }}
-        animate={
-          shouldReduceMotion
-            ? undefined
-            : { x: [0, -18, 0], scale: [1, 1.05, 1] }
-        }
-        transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
+        className="pointer-events-none absolute bottom-[-5rem] right-[8%] h-72 w-72 rounded-full bg-[#FFCFD8]/35 blur-3xl sm:h-96 sm:w-96"
       />
       <div className="pointer-events-none absolute inset-x-0 top-20 h-px bg-[#252525]/10" />
-      <motion.div
+      <div
         aria-hidden="true"
         className="pointer-events-none absolute bottom-12 right-[-8vw] text-[22vw] font-black leading-none tracking-[-0.08em] text-white/80"
-        style={{ y: monogramY }}
       >
         JH
-      </motion.div>
+      </div>
 
-      <motion.div
-        className="relative z-10 mx-auto w-full max-w-[1320px]"
-        style={{ y: contentY }}
-      >
+      <div className="relative z-10 mx-auto w-full max-w-[1320px]">
         <motion.p
           initial={shouldReduceMotion ? false : { opacity: 0, y: 16 }}
           animate={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
@@ -355,13 +306,13 @@ function Hero() {
               whileHover={
                 shouldReduceMotion ? undefined : { y: -4, scale: 1.03 }
               }
-              className="rounded-full border border-[#252525]/15 bg-white/70 px-4 py-2 text-sm font-bold text-[#333] shadow-[0_10px_30px_rgba(40,40,40,0.06)] backdrop-blur-sm"
+              className="rounded-full border border-[#252525]/15 bg-white/92 px-4 py-2 text-sm font-bold text-[#333] shadow-[0_10px_30px_rgba(40,40,40,0.06)]"
             >
               {item}
             </motion.span>
           ))}
         </div>
-      </motion.div>
+      </div>
 
       <motion.div
         initial={shouldReduceMotion ? false : { opacity: 0, y: 10 }}
@@ -371,7 +322,7 @@ function Hero() {
       >
         <ChevronDown className="arrow-float h-6 w-6 text-[#645BE7]" />
       </motion.div>
-    </motion.section>
+    </section>
   );
 }
 
@@ -563,24 +514,22 @@ function Skills() {
 
 function SkillMarquee({ skills }: { skills: Skill[] }) {
   return (
-    <div className="skill-marquee overflow-hidden">
-      <div className="skills-carousel flex w-fit gap-5 px-5">
-        {[...skills, ...skills].map((skill, index) => (
-          <div
-            key={`${skill.name}-${index}`}
-            className="flex w-max min-w-[180px] max-w-[240px] items-center gap-3 rounded-2xl border border-[#ECECF5] bg-white px-5 py-4 shadow-[0_12px_40px_rgba(40,40,40,0.04)] sm:min-w-[200px] sm:max-w-[280px]"
-          >
-            <img
-              src={skill.icon}
-              alt={skill.name}
-              className="h-9 w-9 shrink-0 object-contain"
-            />
-            <span className="min-w-0 truncate whitespace-nowrap text-base font-black text-[#252525]">
-              {skill.name}
-            </span>
-          </div>
-        ))}
-      </div>
+    <div className="mx-auto grid w-full max-w-[1320px] gap-4 px-5 sm:grid-cols-2 sm:px-8 lg:grid-cols-4 lg:px-[8vw]">
+      {skills.map(skill => (
+        <div
+          key={skill.name}
+          className="flex min-w-0 items-center gap-3 rounded-2xl border border-[#ECECF5] bg-white px-5 py-4 shadow-[0_12px_40px_rgba(40,40,40,0.04)]"
+        >
+          <img
+            src={skill.icon}
+            alt={skill.name}
+            className="h-9 w-9 shrink-0 object-contain"
+          />
+          <span className="min-w-0 truncate whitespace-nowrap text-base font-black text-[#252525]">
+            {skill.name}
+          </span>
+        </div>
+      ))}
     </div>
   );
 }
@@ -819,7 +768,7 @@ function ContactLink({
       rel={href.startsWith("mailto:") ? undefined : "noopener noreferrer"}
       whileHover={shouldReduceMotion ? undefined : { y: -4, scale: 1.02 }}
       whileTap={shouldReduceMotion ? undefined : { scale: 0.98 }}
-      className="inline-flex items-center justify-center gap-2 rounded-full border border-[#252525]/10 bg-white/70 px-5 py-3 font-black text-[#252525] shadow-[0_10px_30px_rgba(40,40,40,0.05)] backdrop-blur-sm transition-colors duration-300 hover:border-[#645BE7] hover:bg-[#645BE7] hover:text-white"
+      className="inline-flex items-center justify-center gap-2 rounded-full border border-[#252525]/10 bg-white/92 px-5 py-3 font-black text-[#252525] shadow-[0_10px_30px_rgba(40,40,40,0.05)] transition-colors duration-300 hover:border-[#645BE7] hover:bg-[#645BE7] hover:text-white"
     >
       <Icon size={18} />
       {children}

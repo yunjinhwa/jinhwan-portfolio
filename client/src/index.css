@@ -234,50 +234,6 @@
       center top;
   }
 
-  .skill-marquee {
-    mask-image: linear-gradient(
-      to right,
-      hsl(0 0% 0% / 0),
-      hsl(0 0% 0% / 1) 12%,
-      hsl(0 0% 0% / 1) 88%,
-      hsl(0 0% 0% / 0)
-    );
-  }
-
-  @keyframes skills-carousel {
-    0% {
-      transform: translateX(0);
-    }
-
-    100% {
-      transform: translateX(-50%);
-    }
-  }
-
-  .skills-carousel {
-    animation: skills-carousel 45s linear infinite;
-  }
-
-  .skills-carousel:hover {
-    animation-play-state: paused;
-  }
-
-  @keyframes float-drift {
-    0%,
-    100% {
-      transform: translate3d(0, 0, 0);
-    }
-
-    50% {
-      transform: translate3d(0, -16px, 0);
-    }
-  }
-
-  .floating-orb {
-    animation: float-drift 14s ease-in-out infinite;
-    will-change: transform;
-  }
-
   @keyframes arrow-float {
     0%,
     100% {
@@ -355,8 +311,6 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .skills-carousel,
-    .floating-orb,
     .arrow-float {
       animation: none;
     }
