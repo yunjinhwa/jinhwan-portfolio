@@ -249,6 +249,37 @@
     animation: arrow-float 2.6s ease-in-out infinite;
   }
 
+  @keyframes skill-marquee-scroll {
+    from {
+      transform: translate3d(0, 0, 0);
+    }
+
+    to {
+      transform: translate3d(-50%, 0, 0);
+    }
+  }
+
+  .skill-marquee-track {
+    display: flex;
+    width: max-content;
+    will-change: transform;
+  }
+
+  .skill-marquee-group {
+    display: flex;
+    gap: 1rem;
+    min-width: max-content;
+    padding-right: 1rem;
+  }
+
+  .skill-marquee-animate {
+    animation: skill-marquee-scroll 42s linear infinite;
+  }
+
+  .skill-marquee-track:hover {
+    animation-play-state: paused;
+  }
+
   .project-link {
     position: relative;
     isolation: isolate;
@@ -312,6 +343,10 @@
 
   @media (prefers-reduced-motion: reduce) {
     .arrow-float {
+      animation: none;
+    }
+
+    .skill-marquee-animate {
       animation: none;
     }
 

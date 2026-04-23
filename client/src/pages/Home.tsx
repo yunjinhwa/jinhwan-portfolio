@@ -525,23 +525,49 @@ function Skills() {
 }
 
 function SkillMarquee({ skills }: { skills: Skill[] }) {
+  const shouldReduceMotion = useReducedMotion();
+  const marqueeCopies = shouldReduceMotion ? [0] : [0, 1];
+
   return (
-    <div className="mx-auto grid w-full max-w-[1320px] gap-4 px-5 sm:grid-cols-2 sm:px-8 lg:grid-cols-4 lg:px-[8vw]">
-      {skills.map(skill => (
-        <div
-          key={skill.name}
-          className="flex min-w-0 items-center gap-3 rounded-2xl border border-[#ECECF5] bg-white px-5 py-4 shadow-[0_12px_40px_rgba(40,40,40,0.04)]"
-        >
-          <img
-            src={skill.icon}
-            alt={skill.name}
-            className="h-9 w-9 shrink-0 object-contain"
-          />
-          <span className="min-w-0 truncate whitespace-nowrap text-base font-black text-[#252525]">
-            {skill.name}
-          </span>
-        </div>
-      ))}
+    <div className="relative mx-auto w-full max-w-[1320px] overflow-hidden px-5 sm:px-8 lg:px-[8vw]">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-y-0 left-0 z-10 w-10 bg-gradient-to-r from-[#FAFAFA] to-transparent sm:w-16"
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-y-0 right-0 z-10 w-10 bg-gradient-to-l from-[#FAFAFA] to-transparent sm:w-16"
+      />
+
+      <div
+        className={`skill-marquee-track ${
+          shouldReduceMotion ? "" : "skill-marquee-animate"
+        }`}
+      >
+        {marqueeCopies.map(copyIndex => (
+          <div
+            key={copyIndex}
+            aria-hidden={copyIndex === 1}
+            className="skill-marquee-group"
+          >
+            {skills.map(skill => (
+              <div
+                key={`${skill.name}-${copyIndex}`}
+                className="flex min-w-[180px] items-center gap-3 rounded-2xl border border-[#ECECF5] bg-white px-5 py-4 shadow-[0_12px_40px_rgba(40,40,40,0.04)]"
+              >
+                <img
+                  src={skill.icon}
+                  alt={skill.name}
+                  className="h-9 w-9 shrink-0 object-contain"
+                />
+                <span className="min-w-0 truncate whitespace-nowrap text-base font-black text-[#252525]">
+                  {skill.name}
+                </span>
+              </div>
+            ))}
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
