@@ -131,7 +131,7 @@
 
   html {
     scroll-behavior: smooth;
-    scroll-snap-type: y proximity;
+    scroll-snap-type: y mandatory;
   }
 
   body {
@@ -185,7 +185,7 @@
 @layer components {
   html {
     scroll-behavior: smooth;
-    scroll-snap-type: y proximity;
+    scroll-snap-type: y mandatory;
   }
 
   .portfolio-page > .portfolio-section {
@@ -194,6 +194,7 @@
     content-visibility: auto;
     contain-intrinsic-size: 100vh;
     scroll-snap-align: start;
+    scroll-snap-stop: normal;
   }
 
   html.is-programmatic-scrolling {
