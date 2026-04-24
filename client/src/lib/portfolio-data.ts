@@ -4,7 +4,7 @@ export const portfolioData = {
     name: "윤진환",
     title: "사용자 경험과 인터랙션 구현에 강한 프론트엔드 개발자",
     email: "www139455@naver.com",
-    github: "https://github.com/jinhwan",
+    github: "https://github.com/yunjinhwa",
     instagram: "https://www.instagram.com/angler_jinhwan/",
     bio: "웹 프론트엔드를 중심으로 사용자 흐름과 화면 상호작용을 설계하고 구현하는 과정에 강점이 있습니다. 새로운 기술도 프로젝트에 맞게 빠르게 익혀 적용하며, 완성도 있는 결과물로 연결하는 것을 중요하게 생각합니다.",
   },
