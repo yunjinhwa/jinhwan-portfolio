@@ -13,6 +13,7 @@ import {
   Instagram,
   Languages,
   Mail,
+  ShoppingBasket,
   type LucideIcon,
 } from "lucide-react";
 import { portfolioData } from "@/lib/portfolio-data";
@@ -55,6 +56,7 @@ const PROJECT_ICONS: Record<string, LucideIcon> = {
   fish: Fish,
   footprints: Footprints,
   languages: Languages,
+  shoppingBasket: ShoppingBasket,
 };
 
 const skills = portfolioData.skills.flatMap(group => group.items);

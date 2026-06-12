@@ -140,6 +140,16 @@ export const portfolioData = {
       icon: "languages",
       year: 2024,
     },
+    {
+      id: 6,
+      title: "자취잘해",
+      description:
+        "지역 기반 생활물가 비교, 장보기 예상 합계, 목표가 알림을 제공하는 1인 가구용 모바일 애플리케이션입니다.",
+      technologies: ["React Native", "Expo", "TypeScript", "React Navigation"],
+      link: "https://github.com/yunjinhwa/jachwijalhae",
+      icon: "shoppingBasket",
+      year: 2026,
+    },
   ],
 
   activities: [
